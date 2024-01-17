@@ -5,7 +5,7 @@ A package for extracting a date, or time calculation, from input strings
 - [Overview](#overview)
 - [Credits](#credits)
 
-[npm Package]()
+[npm Package](https://www.npmjs.com/package/time-decoding-utils)
 
 # Overview
 I needed a better time library to extract various types of time calculations and strings from inputs
