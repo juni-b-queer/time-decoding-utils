@@ -49,4 +49,10 @@ describe('extractTimezoneAbbreviation function', () => {
     const output = extractTimezoneAbbreviation(input);
     expect(output).toEqual('PDT');
   });
+
+  test('it should return the longest timezone abbreviation when multiple abbreviations are present', () => {
+    const input = 'The current time in ET and EDT is 10:00am';
+    const output = extractTimezoneAbbreviation(input);
+    expect(output).toEqual('EDT');
+  });
 });
