@@ -26,7 +26,7 @@ export {
  * Helper functions used in throughout the package
  */
 export { convertWordsToNumbers } from "./time-utils/helpers/convert-words-to-numbers";
-export { extractTimezone } from "./time-utils/helpers/extract-timezone";
+export { extractTimezone, extractTimezoneAbbreviation } from "./time-utils/helpers/extract-timezone";
 export { convertDateAndTimeToIso } from "./time-utils/helpers/convert-date-and-time-to-iso";
 export {
   getCurrentDateString,

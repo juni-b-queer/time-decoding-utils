@@ -214,3 +214,12 @@ export function extractTimezone(input: string): boolean | string {
   //return longest string in foundTimezones
   return foundTimezones.reduce((a, b) => (a.length > b.length ? a : b));
 }
+
+export function extractTimezoneAbbreviation(input: string){
+  let foundTimezones = timezoneAbbreviations.filter((timezone) => {
+    const regex = new RegExp("\\b" + timezone + "\\b", "g");
+    return regex.test(input.toUpperCase());
+  });
+  if(foundTimezones.length === 0) return false;
+  return foundTimezones.reduce((a, b) => (a.length > b.length ? a : b));
+}

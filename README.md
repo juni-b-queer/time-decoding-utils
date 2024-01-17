@@ -44,6 +44,7 @@ There are many other date/time helper functions available too make working with,
 
 **[`convertWordsToNumbers`](#convertwordstonumbers)**\
 **[`extractTimezone`](#extracttimezone)**\
+**[`extractTimezoneAbbreviation`](#extracttimezoneabbreviation)**\
 **[`convertDateAndTimeToIso`](#convertdateandtimetoiso)**\
 **[`getCurrentDateString`](#getcurrentdatestring)**\
 **[`getNextDateTime`](#getnextdatetime)**
@@ -327,6 +328,27 @@ This function identifies and extracts the timezone information from a given stri
 - _boolean|string_: Returns the extracted timezone name as a string if a timezone was found in the input. If no timezone is found, the function will return `false`.
 
 This function is a useful utility for parsing and working with timezone data in user-inputted text.
+
+### extractTimezoneAbbreviation
+
+**Usage:**
+```typescript
+extractTimezoneAbbreviation(input: string): boolean | string;
+```
+**Description:**
+
+This function identifies and extracts the timezone abbreviation information from a given string. It uses a predefined list of timezone abbreviations to match portions of the input string. If multiple matches are found, it returns the longest matching timezone abbreviation.
+
+**Parameters:**
+
+- `input` (_string_): The input string from which to extract the timezone abbreviation.
+
+**Returns:**
+
+- _boolean|string_: Returns the extracted timezone abbreviation name as a string if it found any match in the input. If no match is found, the function returns `false`.
+
+This function is useful for parsing and working with timezone abbreviation data in user-inputted text.
+
 
 ## Function in `convert-date-and-time-to-iso.ts`
 

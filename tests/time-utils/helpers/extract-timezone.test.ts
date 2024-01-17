@@ -1,5 +1,5 @@
 import * as moment from "moment-timezone";
-import { extractTimezone } from "../../../src";
+import {extractTimezone, extractTimezoneAbbreviation} from "../../../src";
 
 describe("extractTimezone function", () => {
   const timezoneNames = moment.tz.names();
@@ -28,5 +28,25 @@ describe("extractTimezone function", () => {
   it('should return date for "12-2-24 4PM" input for PST', () => {
     const inputText = "12-2-24 4PM PST";
     expect(extractTimezone(inputText)).toEqual("America/Ensenada");
+  });
+});
+
+describe('extractTimezoneAbbreviation function', () => {
+  test('it should return correct timezone abbreviation', () => {
+    const input = 'The current time in EST is 10:00am';
+    const output = extractTimezoneAbbreviation(input);
+    expect(output).toEqual('EST');
+  });
+
+  test('it should return false when there is no timezone abbreviation', () => {
+    const input = 'The current time is 10:00am';
+    const output = extractTimezoneAbbreviation(input);
+    expect(output).toEqual(false);
+  });
+
+  test('it should return the longest timezone abbreviation when multiple abbreviations are present', () => {
+    const input = 'The current time in EST and PDT is 10:00am';
+    const output = extractTimezoneAbbreviation(input);
+    expect(output).toEqual('PDT');
   });
 });
