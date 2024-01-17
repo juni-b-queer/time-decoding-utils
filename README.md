@@ -332,9 +332,11 @@ This function is a useful utility for parsing and working with timezone data in 
 ### extractTimezoneAbbreviation
 
 **Usage:**
+
 ```typescript
 extractTimezoneAbbreviation(input: string): boolean | string;
 ```
+
 **Description:**
 
 This function identifies and extracts the timezone abbreviation information from a given string. It uses a predefined list of timezone abbreviations to match portions of the input string. If multiple matches are found, it returns the longest matching timezone abbreviation.
@@ -348,7 +350,6 @@ This function identifies and extracts the timezone abbreviation information from
 - _boolean|string_: Returns the extracted timezone abbreviation name as a string if it found any match in the input. If no match is found, the function returns `false`.
 
 This function is useful for parsing and working with timezone abbreviation data in user-inputted text.
-
 
 ## Function in `convert-date-and-time-to-iso.ts`
 
