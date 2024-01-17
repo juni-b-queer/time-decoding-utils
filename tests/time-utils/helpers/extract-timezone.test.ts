@@ -15,8 +15,13 @@ describe("extractTimezone function", () => {
     expect(extractTimezone(inputText)).toBeFalsy();
   });
 
-  it(`should return PST`, () => {
+  it(`should return cst`, () => {
     const inputText = `12-2-24 4PM CST`;
+    expect(extractTimezone(inputText)).toEqual("America/Bahia_Banderas");
+  });
+
+  it(`should return cst`, () => {
+    const inputText = `12-2-24 4PM cst`;
     expect(extractTimezone(inputText)).toEqual("America/Bahia_Banderas");
   });
 
