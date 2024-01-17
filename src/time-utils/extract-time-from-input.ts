@@ -1,4 +1,4 @@
-import {extractDateTimeString, extractTime} from "./extract-date-time-string";
+import { extractDateTimeString, extractTime } from "./extract-date-time-string";
 import { convertDateAndTimeToIso } from "./helpers/convert-date-and-time-to-iso";
 import { convertAdditiveTimeToDate } from "./convert-additive-time-to-date";
 import { extractTimezone } from "./helpers/extract-timezone";
@@ -17,21 +17,27 @@ export function extractTimeFromInput(
 
   let extractedTimestamp = "";
   extractedTimestamp = convertAdditiveTimeToDate(input);
-  if(extractedTimestamp !== ""){
+  if (extractedTimestamp !== "") {
     let match = extractTime(input.toUpperCase());
-    if(typeof match !== "boolean"){
+    if (typeof match !== "boolean") {
       let hourOffset = match.includes("PM") ? 12 : 0;
-      let timeParts = match.replaceAll("AM", "").replaceAll("PM", "").split(":");
+      let timeParts = match
+        .replaceAll("AM", "")
+        .replaceAll("PM", "")
+        .split(":");
       const [hour, minute] = timeParts.map(Number);
-      extractedTimestamp = moment(extractedTimestamp).tz(timezone).set({ hour: hour+hourOffset, minute: minute }).toISOString();
+      extractedTimestamp = moment(extractedTimestamp)
+        .tz(timezone)
+        .set({ hour: hour + hourOffset, minute: minute })
+        .toISOString();
     }
   }
 
-  if(extractedTimestamp === ""){
+  if (extractedTimestamp === "") {
     try {
       extractedTimestamp = convertDateAndTimeToIso(
-          extractDateTimeString(input),
-          timezone,
+        extractDateTimeString(input),
+        timezone,
       );
     } catch (error) {
       extractedTimestamp = "";

@@ -15,14 +15,14 @@ export function getCurrentDateString() {
 
 export function getNextDateTime(inputTimeString: string = ""): string {
   let isInputEmpty = inputTimeString === "";
-  if(isInputEmpty){
-    inputTimeString = moment().add(1, 'minutes').format("hh:mma").toUpperCase();
+  if (isInputEmpty) {
+    inputTimeString = moment().add(1, "minutes").format("hh:mma").toUpperCase();
   }
   const currentTime = moment();
   const inputTime = moment(inputTimeString, ["hA", "hh:mma"]);
 
   if (currentTime.isBefore(inputTime)) {
-    if(isInputEmpty) inputTimeString = moment().format("hh:mma").toUpperCase();
+    if (isInputEmpty) inputTimeString = moment().format("hh:mma").toUpperCase();
     return currentTime.format("YYYY-MM-DD") + " " + inputTimeString;
   } else {
     return (

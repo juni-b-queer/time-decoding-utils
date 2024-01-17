@@ -4,7 +4,9 @@ import {
   extractTime,
   extractDate,
   extractDateTime,
-  replaceSlashWithHyphen, convertDateAndTimeToIso, extractTimeFromInput,
+  replaceSlashWithHyphen,
+  convertDateAndTimeToIso,
+  extractTimeFromInput,
 } from "../../src";
 import { advanceTo, clear } from "jest-date-mock";
 

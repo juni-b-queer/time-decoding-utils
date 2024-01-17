@@ -22,7 +22,6 @@ export {
   processTimeUnits,
 } from "./time-utils/convert-additive-time-to-date";
 
-
 /**
  * Helper functions used in throughout the package
  */

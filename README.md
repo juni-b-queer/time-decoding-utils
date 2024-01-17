@@ -17,16 +17,16 @@ Optionally, it can also accept a timezone, so if you input "on 12/24/24 at 12PM 
 
 There are many other date/time helper functions available too make working with, or extracting dates/times much easier
 
-
-
-
 # Available functions (links to docs)
+
 ## Main Function to be used
+
 **[`extractTimeFromInput`](#extracttimefrominput)**
 
 ### Functions used in extractTimeFromInput
 
 #### Functions for converting time stamps
+
 **[`extractDateTimeString`](#extractdatetimestring)**\
 **[`extractDateTime`](#extractdatetime)**\
 **[`extractDate`](#extractdate)**\
@@ -35,11 +35,13 @@ There are many other date/time helper functions available too make working with,
 **[`replaceSlashWithHyphen`](#replaceslashwithhyphen)**
 
 #### Functions for converting additive time
+
 **[`convertAdditiveTimeToDate`](#convertadditivetimetodate)**\
 **[`processClearPhrases`](#processclearphrases)**\
 **[`processTimeUnits`](#processtimeunits)**
 
 ### Helper functions used throughout the package
+
 **[`convertWordsToNumbers`](#convertwordstonumbers)**\
 **[`extractTimezone`](#extracttimezone)**\
 **[`convertDateAndTimeToIso`](#convertdateandtimetoiso)**\
@@ -47,14 +49,17 @@ There are many other date/time helper functions available too make working with,
 **[`getNextDateTime`](#getnextdatetime)**
 
 # Function descriptions
+
 ## extractTimeFromInput
 
 The `extractTimeFromInput` function is an exported function from the `extract-time-from-input.ts` file.
 
 **Usage:**
-```typescript 
+
+```typescript
 extractTimeFromInput(input: string, timezone: string = DEFAULT_TIMEZONE): string;
 ```
+
 **Description:**
 
 This function is designed to extract the requested time from a given input and return it as a timestamp string. It allows the user to provide a string input containing time details, and optionally a timezone. It uses other functions within the module like `extractTimezone`, `extractDateTimeString`, `convertDateAndTimeToIso`, and `convertAdditiveTimeToDate`.
@@ -86,9 +91,11 @@ This file contains multiple functions related to manipulating and analyzing inpu
 ### extractDateTimeString
 
 **Usage:**
-```typescript 
+
+```typescript
 extractDateTimeString(input: string): string;
 ```
+
 **Description:**
 
 This function extracts datetime from the input string. It uses various helper functions to achieve this which are included in the same script.
@@ -104,9 +111,11 @@ This function extracts datetime from the input string. It uses various helper fu
 ### extractDateTime
 
 **Usage:**
-```typescript 
+
+```typescript
 extractDateTime(input: string): string | boolean;
 ```
+
 **Description:**
 
 This function is used to extract datetime from the input string.
@@ -122,6 +131,7 @@ This function is used to extract datetime from the input string.
 ### extractDate
 
 **Usage:**
+
 ```typescript
 extractDate(input: string): string | boolean;
 ```
@@ -141,9 +151,11 @@ This function is used to extract a date from the input string.
 ### extractTime
 
 **Usage:**
+
 ```typescript
 extractTime(input: string): string | boolean;
 ```
+
 **Description:**
 
 This function is used to extract time from the input string.
@@ -159,9 +171,11 @@ This function is used to extract time from the input string.
 ### addLeadingZeros
 
 **Usage:**
+
 ```typescript
 addLeadingZeros(date: string): string;
 ```
+
 **Description:**
 
 This function is used to add leading zeros to a date string.
@@ -177,9 +191,11 @@ This function is used to add leading zeros to a date string.
 ### replaceSlashWithHyphen
 
 **Usage:**
+
 ```typescript
 replaceSlashWithHyphen(input: string): string;
 ```
+
 **Description:**
 
 This function replaces slashes in a string with hyphens.
@@ -199,9 +215,11 @@ This file provides functionality for processing phrases related to dates and tim
 ### convertAdditiveTimeToDate
 
 **Usage:**
+
 ```typescript
 convertAdditiveTimeToDate(timeString: string): string;
 ```
+
 **Description:**
 
 This function converts additive time phrases to a date string in ISO format.
@@ -217,9 +235,11 @@ This function converts additive time phrases to a date string in ISO format.
 ### processClearPhrases
 
 **Usage:**
+
 ```typescript
 processClearPhrases(date: Date, phrase: string): Date;
 ```
+
 **Description:**
 
 This function interprets clear phrases like 'tomorrow', 'next week', 'next month' and modifies the date accordingly.
@@ -236,9 +256,11 @@ This function interprets clear phrases like 'tomorrow', 'next week', 'next month
 ### processTimeUnits
 
 **Usage:**
+
 ```typescript
 processTimeUnits(date: Date, timeData: string): [Date, boolean];
 ```
+
 **Description:**
 
 This function processes phrases with time units and adjusts the date accordingly.
@@ -256,13 +278,14 @@ This function processes phrases with time units and adjusts the date accordingly
 
 This file contains a function which can convert human-readable, textual numbers (words) into actual number representations. This is useful in situations where numeric data is written in words, such as text-based time indications in English.
 
-
 ### convertWordsToNumbers
 
 **Usage:**
+
 ```typescript
 convertWordsToNumbers(input: string): string;
 ```
+
 **Description:**
 
 This function converts word-based numerical values into actual numbers. It's capable of handling magnitude-related terms such as 'thousand', 'million', 'billion', etc., in addition to smaller numbers up to 'ninety'. The function can handle mixed usage, i.e., combining magnitudes with smaller numbers ('one hundred', 'twenty million', etc.) It works by splitting the text into individual words and gradually constructing the final numeric value.
@@ -286,9 +309,11 @@ This file contains a function for extracting timezone data from a provided input
 ### extractTimezone
 
 **Usage:**
+
 ```typescript
 extractTimezone(input: string): boolean | string;
 ```
+
 **Description:**
 
 This function identifies and extracts the timezone information from a given string. It uses the Moment.js library to match portions of the input string with known timezone names recognized by Moment.js. If multiple matches are found, it will return the longest matching timezone name.
@@ -310,9 +335,11 @@ This file contains a function to convert a date and time, provided as a string i
 ### convertDateAndTimeToIso
 
 **Usage:**
+
 ```typescript
 convertDateAndTimeToIso(input: string, timezone: string = "America/Chicago"): string;
 ```
+
 **Description:**
 
 This function normalizes date strings and convert them to ISO-8601 format. It's highly adaptable and accepts several formats and conventions. The function strives to provide easy time-zone compatibility and is capable of interpreting and adjusting the date-time according to the provided time-zone.
@@ -337,9 +364,11 @@ This file contains two functions that are responsible for generating current dat
 ### getCurrentDateString
 
 **Usage:**
+
 ```typescript
 getCurrentDateString(): string;
 ```
+
 **Description:**
 
 This function provides the current date as a string in the format "YYYY-MM-DD". It's a simple utility for getting the standardized string representation of the current date.
@@ -348,13 +377,14 @@ This function provides the current date as a string in the format "YYYY-MM-DD". 
 
 - _string_: The current date as a string in the format "YYYY-MM-DD".
 
-
 ### getNextDateTime
 
 **Usage:**
+
 ```typescript
 getNextDateTime(inputTimeString: string = ""): string;
 ```
+
 **Description:**
 
 This function calculates the next date-time string based on the current time and a provided input time. If the input time is before the current time, the function considers the input time as the time of the next day.
@@ -368,5 +398,7 @@ This function calculates the next date-time string based on the current time and
 - _string_: The next date-time as a string in the format "YYYY-MM-DD hh:mma". If no input is provided, it will return the current date-time string.
 
 # Credits
+
 This README was almost entirely written by Jetbrains AI. Most of the tests were also written by AI because it was much easier to write good tests that way
+
 ## Packages used

@@ -1,7 +1,11 @@
 import moment from "moment";
 import moment_timezone from "moment-timezone";
-import {addLeadingZeros, extractDate, extractTime} from "../extract-date-time-string";
-import {getNextDateTime} from "./current-date-string";
+import {
+  addLeadingZeros,
+  extractDate,
+  extractTime,
+} from "../extract-date-time-string";
+import { getNextDateTime } from "./current-date-string";
 
 export function convertDateAndTimeToIso(
   input: string,
@@ -17,15 +21,13 @@ export function convertDateAndTimeToIso(
 
   let nowDateTime = moment();
 
-
-
-  let timeString: string|boolean = extractTime(input);
-  if(typeof timeString === "boolean"){
+  let timeString: string | boolean = extractTime(input);
+  if (typeof timeString === "boolean") {
     timeString = "";
   }
 
-  let dateString: string|boolean = extractDate(input);
-  if(typeof dateString === "boolean" && timeString !== ""){
+  let dateString: string | boolean = extractDate(input);
+  if (typeof dateString === "boolean" && timeString !== "") {
     //use nowDateTime and set dateString to the current date in the format YYYY-MM-DD
     input = addLeadingZeros(getNextDateTime(timeString));
   }
@@ -46,12 +48,12 @@ export function convertDateAndTimeToIso(
   // Here's the change... we parse the input using moment.tz to specify timezone as UTC
   for (const format of formats) {
     if (timeString.endsWith("Z")) {
-      timezone = "Etc/UTC"
+      timezone = "Etc/UTC";
     }
     datetime = moment_timezone.tz(input, format, timezone);
-    if (datetime.isValid()){
+    if (datetime.isValid()) {
       // if initialized datetime is in the past
-      if(datetime.isBefore(nowDateTime)){
+      if (datetime.isBefore(nowDateTime)) {
         const currentDateTime = moment();
         datetime.set({
           year: currentDateTime.year(),
@@ -67,24 +69,31 @@ export function convertDateAndTimeToIso(
     throw new Error(`Invalid date: ${input}`);
   }
 
-  if (!input.includes("AM") && !input.includes("PM") && !input.includes("T") && !timeString.includes(":")) {
+  if (
+    !input.includes("AM") &&
+    !input.includes("PM") &&
+    !input.includes("T") &&
+    !timeString.includes(":")
+  ) {
     datetime.set({ hour: 12, minute: 0, second: 0 });
   }
 
+  if (
+    input.includes("AM") ||
+    input.includes("PM") ||
+    timeString.includes(":")
+  ) {
+    //if the input also includes a colon, for example "12-02-2024 10:15AM"
+    let minuteString: string = "00";
+    let minuteNumber: number = 0;
 
-
-    if (input.includes("AM") || input.includes("PM") || timeString.includes(":")) {
-      //if the input also includes a colon, for example "12-02-2024 10:15AM"
-        let minuteString: string = "00";
-        let minuteNumber: number = 0;
-
-        if (timeString.includes(":")) {
-          minuteString = timeString.split(":")[1].replace(/\D/g, "");
-        }
-        minuteNumber = parseInt(minuteString);
-
-        datetime.set({ minute: minuteNumber });
+    if (timeString.includes(":")) {
+      minuteString = timeString.split(":")[1].replace(/\D/g, "");
     }
+    minuteNumber = parseInt(minuteString);
+
+    datetime.set({ minute: minuteNumber });
+  }
 
   // Convert date from UTC to ISO format
   return datetime.toISOString();

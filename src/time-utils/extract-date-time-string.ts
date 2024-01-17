@@ -77,7 +77,7 @@ export function extractTime(input: string): string | boolean {
   const timeFormats = [
     /(\b\d{1,2}:\d{2}(AM|PM)\b)/gi,
     /\b\d{1,2}:\d{2}:\d{2}Z\b/g,
-    /\b\d{1,2}:\d{2}:\d{2}.\d{1,3}Z\b/g
+    /\b\d{1,2}:\d{2}:\d{2}.\d{1,3}Z\b/g,
   ];
 
   for (const timePattern of timeFormats) {
@@ -88,18 +88,16 @@ export function extractTime(input: string): string | boolean {
       break;
     }
   }
-  if(input.match(/(\b\d{1,2}(AM|PM)\b)/gi) && outputTime === ""){
+  if (input.match(/(\b\d{1,2}(AM|PM)\b)/gi) && outputTime === "") {
     const match = input.match(/(\d+)(AM|PM)/);
     if (match) {
       let [_, hour, meridiem] = match;
 
       // pad with 0 if it's in single digit format
-      hour = hour.padStart(2, '0');
-
+      hour = hour.padStart(2, "0");
 
       outputTime = `${hour}:00${meridiem}`;
     }
-
   }
   if (outputTime === "") {
     return false;
@@ -117,7 +115,8 @@ export function addLeadingZeros(date: string): string {
       (splitDate[0].length === 2 && parseInt(splitDate[0]) >= 24) ||
       splitDate[0].length === 4
     ) {
-      const year = splitDate[0].length === 2 ? `20${splitDate[0]}` : splitDate[0];
+      const year =
+        splitDate[0].length === 2 ? `20${splitDate[0]}` : splitDate[0];
       const month = splitDate[1].padStart(2, "0");
       const day = splitDate[2].padStart(2, "0");
       return `${year}-${month}-${day}`;
@@ -130,7 +129,8 @@ export function addLeadingZeros(date: string): string {
     ) {
       const month = splitDate[0].padStart(2, "0");
       const day = splitDate[1].padStart(2, "0");
-      const year = splitDate[2].length === 2 ? `20${splitDate[2]}` : splitDate[2];
+      const year =
+        splitDate[2].length === 2 ? `20${splitDate[2]}` : splitDate[2];
       return `${month}-${day}-${year}`;
     }
   }

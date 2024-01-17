@@ -1,6 +1,10 @@
-import {convertAdditiveTimeToDate, extractTime, extractTimeFromInput} from "../../src";
+import {
+  convertAdditiveTimeToDate,
+  extractTime,
+  extractTimeFromInput,
+} from "../../src";
 import { advanceTo, clear } from "jest-date-mock";
-import {add} from "date-fns";
+import { add } from "date-fns";
 import moment from "moment/moment";
 
 describe("extractTimeFromInput Test Suite", () => {
@@ -205,39 +209,38 @@ describe("extractTimeFromInput Test Suite", () => {
   });
 
   it("Test example: tomorrow at 9pm", () => {
-    const input = "I will meet you tomorrow at 9pm"
+    const input = "I will meet you tomorrow at 9pm";
     const expected = "2024-01-18T03:00:00.000Z";
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
 
   it("Test example: tomorrow at 9am", () => {
-    const input = "I will meet you tomorrow at 9am"
+    const input = "I will meet you tomorrow at 9am";
     const expected = "2024-01-17T15:00:00.000Z";
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
 
   it("Test example: tomorrow at 9am PST", () => {
-    const input = "I will meet you tomorrow at 9am PST"
+    const input = "I will meet you tomorrow at 9am PST";
     const expected = "2024-01-17T17:00:00.000Z";
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
 
   it("Test example: tomorrow at 9am EST", () => {
-    const input = "I will meet you tomorrow at 9am EST"
+    const input = "I will meet you tomorrow at 9am EST";
     const expected = "2024-01-17T14:00:00.000Z";
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
 
   it("Test example: next week at 9pm", () => {
-    const input = "I will meet you next week at 9pm"
+    const input = "I will meet you next week at 9pm";
     const expected = "2024-01-24T03:00:00.000Z";
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
 
   it("Test example: bad input", () => {
-    const input = "I will meet you"
+    const input = "I will meet you";
     const expected = "";
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
-
 });

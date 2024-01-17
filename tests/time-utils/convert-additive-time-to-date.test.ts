@@ -46,7 +46,9 @@ describe("convertAdditiveTimeToDate Correctly generates the right date", () => {
   });
 
   it("Test example: 1 month, 2 weeks, five days and 20 minutes", () => {
-    expect(convertAdditiveTimeToDate("1 month, 2 weeks, five days and 20 minutes")).toBe(
+    expect(
+      convertAdditiveTimeToDate("1 month, 2 weeks, five days and 20 minutes"),
+    ).toBe(
       add(currentTime, {
         ["months"]: Number("1"),
         ["weeks"]: Number("2"),
@@ -76,7 +78,7 @@ describe("convertAdditiveTimeToDate Correctly generates the right date", () => {
 
   it("Test example: next year", () => {
     expect(convertAdditiveTimeToDate("next year")).toBe(
-        add(currentTime, { ["years"]: Number("1") }).toISOString(),
+      add(currentTime, { ["years"]: Number("1") }).toISOString(),
     );
   });
 
@@ -101,38 +103,45 @@ describe("convertAdditiveTimeToDate Correctly generates the right date from larg
   });
 
   it("Test example: 2 days 12 hours", () => {
-    const input = "to get this done in 2 days, 12 hours"
+    const input = "to get this done in 2 days, 12 hours";
     expect(convertAdditiveTimeToDate(input)).toBe(
-        add(currentTime, { ["days"]: Number("2"), ["hours"]: Number("12") }).toISOString(),
+      add(currentTime, {
+        ["days"]: Number("2"),
+        ["hours"]: Number("12"),
+      }).toISOString(),
     );
   });
 
   it("Test example: 1 year 12 hours", () => {
-    const input = "to get this done in 1 year and 12 hours"
+    const input = "to get this done in 1 year and 12 hours";
     expect(convertAdditiveTimeToDate(input)).toBe(
-        add(currentTime, { ["years"]: Number("1"), ["hours"]: Number("12") }).toISOString(),
+      add(currentTime, {
+        ["years"]: Number("1"),
+        ["hours"]: Number("12"),
+      }).toISOString(),
     );
   });
 
   it("Test example: 12 weeks 4 hours", () => {
-    const input = "to get this done in 12 weeks, 4 hours"
+    const input = "to get this done in 12 weeks, 4 hours";
     expect(convertAdditiveTimeToDate(input)).toBe(
-        add(currentTime, { ["weeks"]: Number("12"), ["hours"]: Number("4") }).toISOString(),
+      add(currentTime, {
+        ["weeks"]: Number("12"),
+        ["hours"]: Number("4"),
+      }).toISOString(),
     );
   });
   it("Test example: 2 days from tomorrow", () => {
-    const input = "to get this done in 2 days from tomorrow"
+    const input = "to get this done in 2 days from tomorrow";
     expect(convertAdditiveTimeToDate(input)).toBe(
-        add(currentTime, { ["days"]: Number("3")}).toISOString(),
+      add(currentTime, { ["days"]: Number("3") }).toISOString(),
     );
   });
 
   it("Test example: tomorrow at 9pm", () => {
-    const input = "I will meet you tomorrow at 9pm"
-    let expected = add(currentTime, { ["days"]: Number("1")});
-    expect(convertAdditiveTimeToDate(input)).toBe(
-        expected.toISOString()
-    );
+    const input = "I will meet you tomorrow at 9pm";
+    let expected = add(currentTime, { ["days"]: Number("1") });
+    expect(convertAdditiveTimeToDate(input)).toBe(expected.toISOString());
   });
 });
 
