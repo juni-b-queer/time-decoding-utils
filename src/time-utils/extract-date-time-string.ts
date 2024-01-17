@@ -91,6 +91,7 @@ export function extractTime(input: string): string | boolean {
   if (input.match(/(\b\d{1,2}(AM|PM)\b)/gi) && outputTime === "") {
     const match = input.match(/(\d+)(AM|PM)/);
     if (match) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
       let [_, hour, meridiem] = match;
 
       // pad with 0 if it's in single digit format

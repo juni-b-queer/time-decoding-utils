@@ -14,7 +14,7 @@ export function getCurrentDateString() {
 }
 
 export function getNextDateTime(inputTimeString: string = ""): string {
-  let isInputEmpty = inputTimeString === "";
+  const isInputEmpty = inputTimeString === "";
   if (isInputEmpty) {
     inputTimeString = moment().add(1, "minutes").format("hh:mma").toUpperCase();
   }

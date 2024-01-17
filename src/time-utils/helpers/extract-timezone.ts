@@ -192,9 +192,9 @@ export function extractTimezone(input: string): boolean | string {
     if (foundTimezones.length > 0) {
       let matchedTimezone = "";
       foundTimezones.forEach((abbreviation) => {
-        let matches = moment.tz.names().filter((name) => {
+        const matches = moment.tz.names().filter((name) => {
           // Get the current abbreviation for this timezone
-          let currentAbbreviation = moment.tz(name).zoneAbbr();
+          const currentAbbreviation = moment.tz(name).zoneAbbr();
           return abbreviation === currentAbbreviation;
         });
 

@@ -18,10 +18,10 @@ export function extractTimeFromInput(
   let extractedTimestamp = "";
   extractedTimestamp = convertAdditiveTimeToDate(input);
   if (extractedTimestamp !== "") {
-    let match = extractTime(input.toUpperCase());
+    const match = extractTime(input.toUpperCase());
     if (typeof match !== "boolean") {
-      let hourOffset = match.includes("PM") ? 12 : 0;
-      let timeParts = match
+      const hourOffset = match.includes("PM") ? 12 : 0;
+      const timeParts = match
         .replaceAll("AM", "")
         .replaceAll("PM", "")
         .split(":");

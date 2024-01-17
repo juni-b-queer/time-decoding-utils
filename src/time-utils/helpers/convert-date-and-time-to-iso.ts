@@ -19,14 +19,14 @@ export function convertDateAndTimeToIso(
 
   input = input.toUpperCase(); // Convert input to uppercase
 
-  let nowDateTime = moment();
+  const nowDateTime = moment();
 
   let timeString: string | boolean = extractTime(input);
   if (typeof timeString === "boolean") {
     timeString = "";
   }
 
-  let dateString: string | boolean = extractDate(input);
+  const dateString: string | boolean = extractDate(input);
   if (typeof dateString === "boolean" && timeString !== "") {
     //use nowDateTime and set dateString to the current date in the format YYYY-MM-DD
     input = addLeadingZeros(getNextDateTime(timeString));

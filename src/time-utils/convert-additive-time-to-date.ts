@@ -52,7 +52,7 @@ export function convertAdditiveTimeToDate(timeString: string): string {
   let timeSpecArray: RegExpMatchArray | null | undefined = timeString.match(
     /(\w+|\d+)\s(year|month|week|day|hour|minute|second|and)s?/gi,
   );
-  let nextTimeSpecArray: RegExpMatchArray | null = timeString.match(
+  const nextTimeSpecArray: RegExpMatchArray | null = timeString.match(
     /(tomorrow|nextweek|nextmonth|nextyear)/gi,
   );
 
@@ -65,13 +65,13 @@ export function convertAdditiveTimeToDate(timeString: string): string {
   } else if (nextTimeSpecArray !== undefined && nextTimeSpecArray !== null) {
     timeSpecArray = nextTimeSpecArray;
   } else {
-    //@ts-ignore
+    //@ts-expect-error just set it to an empty array
     timeSpecArray = [];
   }
 
-  //@ts-ignore
-  let joinedTimeSpec = timeSpecArray.join(", ");
-  let timeSpec = joinedTimeSpec
+  //@ts-expect-error This won't fail, I've already checked them above
+  const joinedTimeSpec = timeSpecArray.join(", ");
+  const timeSpec = joinedTimeSpec
     .replace(/nextweek/gi, "next week")
     .replace(/nextmonth/gi, "next month")
     .replace(/nextyear/gi, "next year");

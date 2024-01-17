@@ -1,11 +1,7 @@
 import {
-  convertAdditiveTimeToDate,
-  extractTime,
   extractTimeFromInput,
 } from "../../src";
 import { advanceTo, clear } from "jest-date-mock";
-import { add } from "date-fns";
-import moment from "moment/moment";
 
 describe("extractTimeFromInput Test Suite", () => {
   beforeAll(() => {

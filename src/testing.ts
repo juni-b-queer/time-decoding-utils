@@ -1,6 +1,6 @@
 import * as moment from "moment-timezone";
 
-let abbreviationMapping: { [key: string]: string } = {};
+const abbreviationMapping: { [key: string]: string } = {};
 const timezoneAbbreviations = [
   "ACDT", // Australian Central Daylight Savings Time
   "ACST", // Australian Central Standard Time
@@ -177,9 +177,9 @@ const timezoneAbbreviations = [
   "YEKT",
 ];
 timezoneAbbreviations.forEach((abbreviation) => {
-  let matches = moment.tz.names().filter((name) => {
+  const matches = moment.tz.names().filter((name) => {
     // Get the current abbreviation for this timezone
-    let currentAbbreviation = moment.tz(name).zoneAbbr();
+    const currentAbbreviation = moment.tz(name).zoneAbbr();
     return abbreviation === currentAbbreviation;
   });
 

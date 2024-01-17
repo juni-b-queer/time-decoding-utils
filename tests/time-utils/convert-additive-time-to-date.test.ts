@@ -1,11 +1,6 @@
-import { add, addDays, addMonths, addWeeks } from "date-fns";
-import {
-  convertAdditiveTimeToDate,
-  processClearPhrases,
-  processTimeUnits,
-} from "../../src";
-import { advanceTo, clear } from "jest-date-mock";
-import moment from "moment";
+import {add, addDays, addMonths, addWeeks} from "date-fns";
+import {convertAdditiveTimeToDate, processClearPhrases, processTimeUnits,} from "../../src";
+import {advanceTo, clear} from "jest-date-mock";
 
 describe("convertAdditiveTimeToDate Correctly generates the right date", () => {
   let currentTime: Date;
@@ -140,7 +135,7 @@ describe("convertAdditiveTimeToDate Correctly generates the right date from larg
 
   it("Test example: tomorrow at 9pm", () => {
     const input = "I will meet you tomorrow at 9pm";
-    let expected = add(currentTime, { ["days"]: Number("1") });
+    const expected = add(currentTime, { ["days"]: Number("1") });
     expect(convertAdditiveTimeToDate(input)).toBe(expected.toISOString());
   });
 });

@@ -1,14 +1,12 @@
 import {
-  extractDateTimeString,
   addLeadingZeros,
-  extractTime,
   extractDate,
   extractDateTime,
+  extractDateTimeString,
+  extractTime,
   replaceSlashWithHyphen,
-  convertDateAndTimeToIso,
-  extractTimeFromInput,
 } from "../../src";
-import { advanceTo, clear } from "jest-date-mock";
+import {advanceTo, clear} from "jest-date-mock";
 
 describe("extractDateTimeString Test Suite", () => {
   beforeAll(() => {
