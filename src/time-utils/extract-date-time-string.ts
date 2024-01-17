@@ -75,7 +75,7 @@ export function extractDate(input: string): string | boolean {
 export function extractTime(input: string): string | boolean {
   let outputTime = "";
   const timeFormats = [
-    /(\b\d{1,2}:\d{2}(AM|PM)\b)/gi,
+    /(\b\d{1,2}:\d{2}(AM|PM|am|pm)\b)/gi,
     /\b\d{1,2}:\d{2}:\d{2}Z\b/g,
     /\b\d{1,2}:\d{2}:\d{2}.\d{1,3}Z\b/g,
   ];
@@ -88,8 +88,8 @@ export function extractTime(input: string): string | boolean {
       break;
     }
   }
-  if (input.match(/(\b\d{1,2}(AM|PM)\b)/gi) && outputTime === "") {
-    const match = input.match(/(\d+)(AM|PM)/);
+  if (input.match(/(\b\d{1,2}(AM|PM|am|pm)\b)/gi) && outputTime === "") {
+    const match = input.match(/(\d+)(AM|PM|am|pm)/);
     if (match) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
       let [_, hour, meridiem] = match;
@@ -103,7 +103,7 @@ export function extractTime(input: string): string | boolean {
   if (outputTime === "") {
     return false;
   }
-  return outputTime;
+  return outputTime.toUpperCase();
 }
 
 export function addLeadingZeros(date: string): string {
