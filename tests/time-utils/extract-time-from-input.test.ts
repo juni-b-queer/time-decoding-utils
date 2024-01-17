@@ -8,7 +8,8 @@ describe('extractTimeFromInput Test Suite', () => {
         expect(true).toEqual(true)
     })
     beforeAll(() => {
-        advanceTo(new Date("2024-01-16T12:00:00"));    // Mock the date
+        advanceTo(new Date(Date.UTC(2024, 1, 16, 12, 0, 0)));
+        // advanceTo(new Date("2024-01-16T12:00:00"));    // Mock the date
     });
 
     afterAll(() => {

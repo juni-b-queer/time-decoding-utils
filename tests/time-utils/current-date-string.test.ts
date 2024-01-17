@@ -25,8 +25,7 @@ describe('getCurrentDateString tests', () => {
 
 
     it('should prepend 0 when the day is single digit', () => {
-        // advanceTo(new Date("2024-01-09T12:00:00"));  // Set the mock date to a single digit day
-        advanceTo(new Date(Date.UTC(2024, 1, 9, 12, 0, 0)));
+        advanceTo(new Date("2024-01-09T12:00:00"));  // Set the mock date to a single digit day
         const currentDate = getCurrentDateString();
         const expectedDate = moment().format('YYYY-MM-DD');
         expect(currentDate).toEqual(expectedDate);
