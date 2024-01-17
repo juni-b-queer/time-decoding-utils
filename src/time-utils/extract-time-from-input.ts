@@ -1,25 +1,37 @@
-import {extractDateTimeString} from "./extract-date-time-string";
-import {convertDateAndTimeToIso} from "./convert-date-and-time-to-iso";
-import {convertWordsToNumbers} from "./convert-words-to-numbers";
-import {convertAdditiveTimeToDate} from "./convert-additive-time-to-date";
+import { extractDateTimeString } from "./extract-date-time-string";
+import { convertDateAndTimeToIso } from "./convert-date-and-time-to-iso";
+import { convertAdditiveTimeToDate } from "./convert-additive-time-to-date";
+import { extractTimezone } from "./extract-timezone";
 
-export function extractTimeFromInput(input: string): string {
-    let extractedTimestamp = ""
-    //if timestamp
-    // extract timestamp
+const DEFAULT_TIMEZONE = process.env.DEFAULT_TIMEZONE ?? "America/Chicago";
 
+export function extractTimeFromInput(
+  input: string,
+  timezone: string = DEFAULT_TIMEZONE,
+): string {
+  //TODO Extract timezone
+  let extractedTimezone = extractTimezone(input);
+  if (typeof extractedTimezone !== "boolean") {
+    timezone = extractedTimezone;
+  }
 
-    try{
-        extractedTimestamp = convertDateAndTimeToIso(extractDateTimeString(input))
+  let extractedTimestamp = "";
+  //if timestamp
+  // extract timestamp
 
-    }catch(error){
-        extractedTimestamp = convertAdditiveTimeToDate(input)
-    }
+  try {
+    extractedTimestamp = convertDateAndTimeToIso(
+      extractDateTimeString(input),
+      timezone,
+    );
+  } catch (error) {
+    extractedTimestamp = convertAdditiveTimeToDate(input);
+  }
 
-    // Determine time type
+  // Determine time type
 
-    // if additive
-    // extract additive
+  // if additive
+  // extract additive
 
-    return extractedTimestamp;
+  return extractedTimestamp;
 }
