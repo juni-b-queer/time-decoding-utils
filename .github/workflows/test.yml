@@ -4,6 +4,8 @@ jobs:
   release:
     name: Run Tests
     runs-on: ubuntu-latest
+    env:
+      TZ: 'Etc/UTC'
     steps:
       - name: checkout
         uses: actions/checkout@v3
