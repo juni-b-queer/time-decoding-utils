@@ -216,6 +216,12 @@ describe("extractTimeFromInput Test Suite", () => {
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
 
+  it("Test example: tomorrow at 9am", () => {
+    const input = "I will meet you tomorrow at 9am PST"
+    const expected = "2024-01-17T15:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
   it("Test example: next week at 9pm", () => {
     const input = "I will meet you next week at 9pm"
     const expected = "2024-01-24T03:00:00.000Z";
