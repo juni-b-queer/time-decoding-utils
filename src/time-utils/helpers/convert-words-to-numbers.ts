@@ -47,7 +47,7 @@ export function convertWordsToNumbers(input: string): string {
   const words = input.split(/\s|-/).filter((word) => word !== "and");
   let totalNumber = 0;
   let currentNumber = 0;
-  for (let word of words) {
+  for (const word of words) {
     const smallNumber = smallNumbers[word];
     if (smallNumber !== undefined) {
       currentNumber += smallNumber;
@@ -63,6 +63,6 @@ export function convertWordsToNumbers(input: string): string {
       }
     }
   }
-  let value = totalNumber + currentNumber;
+  const value = totalNumber + currentNumber;
   return value.toString();
 }

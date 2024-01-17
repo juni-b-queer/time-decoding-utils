@@ -3,8 +3,10 @@
  */
 export { extractTimeFromInput } from "./time-utils/extract-time-from-input";
 
-export { extractTimezone } from "./time-utils/extract-timezone";
-export { convertDateAndTimeToIso } from "./time-utils/convert-date-and-time-to-iso";
+/**
+ * Functions used in extractTimeFromInput
+ */
+//Functions for converting time stamps
 export {
   extractDateTimeString,
   extractDateTime,
@@ -13,14 +15,21 @@ export {
   addLeadingZeros,
   replaceSlashWithHyphen,
 } from "./time-utils/extract-date-time-string";
+//Functions for converting additive time
 export {
   convertAdditiveTimeToDate,
   processClearPhrases,
   processTimeUnits,
 } from "./time-utils/convert-additive-time-to-date";
 
-export { convertWordsToNumbers } from "./time-utils/convert-words-to-numbers";
+
+/**
+ * Helper functions used in throughout the package
+ */
+export { convertWordsToNumbers } from "./time-utils/helpers/convert-words-to-numbers";
+export { extractTimezone } from "./time-utils/helpers/extract-timezone";
+export { convertDateAndTimeToIso } from "./time-utils/helpers/convert-date-and-time-to-iso";
 export {
   getCurrentDateString,
   getNextDateTime,
-} from "./time-utils/current-date-string";
+} from "./time-utils/helpers/current-date-string";

@@ -1,4 +1,4 @@
-import { getCurrentDateString, getNextDateTime } from "./current-date-string";
+import { getNextDateTime } from "./helpers/current-date-string";
 
 export function extractDateTimeString(input: string): string {
   let extractedDateTime = "";
@@ -54,7 +54,8 @@ export function extractDate(input: string): string | boolean {
   const dateFormats = [
     /\b\d{4}-\d{1,2}-\d{1,2}\b/g, // Matches "2024-12-24"
     /\b\d{2}-\d{1,2}-\d{1,2}\b/g, // Matches "24-12-24" and "24-1-2"
-    /\b\d{1,2}-\d{1,2}-\d{2}\b/g,
+    /\b\d{1,2}-\d{1,2}-\d{2}\b/g, // Matches 12-12-24 1-12-24 and 12-1-24
+    /\b\d{1,2}-\d{1,2}-\d{4}\b/g, // Matches 12-12-24 1-12-24 and 12-1-24
     /\b\d{1,2}\/\d{1,2}\/\d{4}\b/g, // Matches "12/24/2024"
     /\b\d{1,2}\/\d{1,2}\/\d{2}\b/g, // Matches "9/3/24"
   ];
@@ -75,8 +76,8 @@ export function extractTime(input: string): string | boolean {
   let outputTime = "";
   const timeFormats = [
     /(\b\d{1,2}:\d{2}(AM|PM)\b)/gi,
-    /\b\d{1,2}:\d{2}:\d{2}\Z\b/g,
-    /(\b\d{1,2}(AM|PM)\b)/gi,
+    /\b\d{1,2}:\d{2}:\d{2}Z\b/g,
+    /\b\d{1,2}:\d{2}:\d{2}.\d{1,3}Z\b/g
   ];
 
   for (const timePattern of timeFormats) {
@@ -86,6 +87,19 @@ export function extractTime(input: string): string | boolean {
       outputTime = outputTime.toUpperCase(); // Convert the output to uppercase
       break;
     }
+  }
+  if(input.match(/(\b\d{1,2}(AM|PM)\b)/gi) && outputTime === ""){
+    const match = input.match(/(\d+)(AM|PM)/);
+    if (match) {
+      let [_, hour, meridiem] = match;
+
+      // pad with 0 if it's in single digit format
+      hour = hour.padStart(2, '0');
+
+
+      outputTime = `${hour}:00${meridiem}`;
+    }
+
   }
   if (outputTime === "") {
     return false;
@@ -103,9 +117,9 @@ export function addLeadingZeros(date: string): string {
       (splitDate[0].length === 2 && parseInt(splitDate[0]) >= 24) ||
       splitDate[0].length === 4
     ) {
-      let year = splitDate[0].length === 2 ? `20${splitDate[0]}` : splitDate[0];
-      let month = splitDate[1].padStart(2, "0");
-      let day = splitDate[2].padStart(2, "0");
+      const year = splitDate[0].length === 2 ? `20${splitDate[0]}` : splitDate[0];
+      const month = splitDate[1].padStart(2, "0");
+      const day = splitDate[2].padStart(2, "0");
       return `${year}-${month}-${day}`;
     }
 
@@ -114,9 +128,9 @@ export function addLeadingZeros(date: string): string {
       (splitDate[2].length === 2 && parseInt(splitDate[2]) >= 24) ||
       splitDate[2].length === 4
     ) {
-      let month = splitDate[0].padStart(2, "0");
-      let day = splitDate[1].padStart(2, "0");
-      let year = splitDate[2].length === 2 ? `20${splitDate[2]}` : splitDate[2];
+      const month = splitDate[0].padStart(2, "0");
+      const day = splitDate[1].padStart(2, "0");
+      const year = splitDate[2].length === 2 ? `20${splitDate[2]}` : splitDate[2];
       return `${month}-${day}-${year}`;
     }
   }
@@ -127,15 +141,3 @@ export function addLeadingZeros(date: string): string {
 export function replaceSlashWithHyphen(input: string): string {
   return input.replace(/\//g, "-");
 }
-
-let timeStrings = [
-  "10AM",
-  "1PM",
-  "11:30AM",
-  "5PM",
-  "12:15PM",
-  "11AM",
-  "7AM",
-  "2PM",
-  "9:45PM",
-];

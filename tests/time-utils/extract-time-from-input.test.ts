@@ -1,5 +1,7 @@
-import { extractTimeFromInput } from "../../src";
+import {convertAdditiveTimeToDate, extractTime, extractTimeFromInput} from "../../src";
 import { advanceTo, clear } from "jest-date-mock";
+import {add} from "date-fns";
+import moment from "moment/moment";
 
 describe("extractTimeFromInput Test Suite", () => {
   beforeAll(() => {
@@ -179,8 +181,51 @@ describe("extractTimeFromInput Test Suite", () => {
   });
 
   it('should return date for "12-2-24 4PM" input for PST', () => {
-    const input = "12-2-24 4PM PDT";
-    const expected = "2024-12-02T22:00:00.000Z";
+    const input = "12-2-24 4PM PST";
+    const expected = "2024-12-03T00:00:00.000Z";
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
+
+  it("should extract valid Time string from 12:30:00Z in UTC when time ends in Z", () => {
+    const input = "The time is 12:30:00Z in HH:mm:ssZ format";
+    const expected = "2024-01-16T12:30:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    const input = "The time is 20:15:00.000Z in HH:mm:ssZ format";
+    const expected = "2024-01-16T20:15:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    const input = "to do a thing on 12/24/2025 at 12PM America/New York";
+    const expected = "2025-12-24T17:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: tomorrow at 9pm", () => {
+    const input = "I will meet you tomorrow at 9pm"
+    const expected = "2024-01-18T03:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: tomorrow at 9am", () => {
+    const input = "I will meet you tomorrow at 9am"
+    const expected = "2024-01-17T15:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: next week at 9pm", () => {
+    const input = "I will meet you next week at 9pm"
+    const expected = "2024-01-24T03:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: bad input", () => {
+    const input = "I will meet you"
+    const expected = "";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
 });

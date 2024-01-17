@@ -1,5 +1,5 @@
 import moment from "moment";
-import { getCurrentDateString, getNextDateTime } from "../../src";
+import { getCurrentDateString, getNextDateTime } from "../../../src";
 import { advanceTo, clear } from "jest-date-mock";
 
 describe("getCurrentDateString tests", () => {
@@ -78,5 +78,16 @@ describe("Testing getNextDateTime function", () => {
     const output = getNextDateTime(input);
     // expected output is one day after ("2024-01-17") as date and "12:00PM" as time
     expect(output).toEqual("2024-01-17 12:00PM");
+  });
+
+  test("when input time is empty, get current date time", () => {
+    const input = "";
+    const output = getNextDateTime(input);
+    expect(output).toEqual("2024-01-16 12:00PM");
+  });
+
+  test("when no input time is empt, get current date time", () => {
+    const output = getNextDateTime();
+    expect(output).toEqual("2024-01-16 12:00PM");
   });
 });

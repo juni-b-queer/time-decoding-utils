@@ -4,7 +4,7 @@ import {
   extractTime,
   extractDate,
   extractDateTime,
-  replaceSlashWithHyphen,
+  replaceSlashWithHyphen, convertDateAndTimeToIso, extractTimeFromInput,
 } from "../../src";
 import { advanceTo, clear } from "jest-date-mock";
 
@@ -22,6 +22,12 @@ describe("extractDateTimeString Test Suite", () => {
     expect(extractDateTimeString(input)).toEqual(expected);
   });
 
+  it('should extract "12:30:00.000Z" ', () => {
+    const input = "12:30:00.000Z";
+    const expected = "2024-01-16 12:30:00.000Z";
+    expect(extractDateTimeString(input)).toEqual(expected);
+  });
+
   it('should extract "2024-12-24" from the string "on 2024-12-24 hello world"', () => {
     const input = "on 2024-12-24 hello world";
     const expected = "2024-12-24";
@@ -30,14 +36,14 @@ describe("extractDateTimeString Test Suite", () => {
 
   it('should extract "12/24/2024 1PM" from the string "1PM on 12/24/2024 i\'m flying"', () => {
     const input = "1PM on 12/24/2024 i'm flying";
-    const expected = "12-24-2024 1PM";
+    const expected = "12-24-2024 01:00PM";
     expect(extractDateTimeString(input)).toEqual(expected);
   });
 
   it('should extract "9/3/24 4PM" from the string with a lot of words', () => {
     const input =
       "4PM on 9/3/24 a long string of words and stuff that also has the word on or at to throw off and test the functions handling";
-    const expected = "09-03-2024 4PM";
+    const expected = "09-03-2024 04:00PM";
     expect(extractDateTimeString(input)).toEqual(expected);
   });
 
@@ -49,7 +55,7 @@ describe("extractDateTimeString Test Suite", () => {
 
   it('should extract "2024-12-24 1PM" from the string "2024-12-24 1PM"', () => {
     const input = "2024-12-24 1PM";
-    const expected = "2024-12-24 1PM";
+    const expected = "2024-12-24 01:00PM";
     expect(extractDateTimeString(input)).toEqual(expected);
   });
 
@@ -61,13 +67,13 @@ describe("extractDateTimeString Test Suite", () => {
 
   it('should extract "2026-02-28 2AM" from the string with a lot of words', () => {
     const input = "2026-02-28 2AM a string to do a thing at a time";
-    const expected = "2026-02-28 2AM";
+    const expected = "2026-02-28 02:00AM";
     expect(extractDateTimeString(input)).toEqual(expected);
   });
 
   it('should extract "2026-02-05 2AM" from the string ', () => {
     const input = "26-2-5 2AM a string to do a thing at a time";
-    const expected = "2026-02-05 2AM";
+    const expected = "2026-02-05 02:00AM";
     expect(extractDateTimeString(input)).toEqual(expected);
   });
 
@@ -79,7 +85,7 @@ describe("extractDateTimeString Test Suite", () => {
 
   it('should extract "09-02-2024 4PM" from the string "9-2-24 4PM example text"', () => {
     const input = "9-2-24 4PM example text";
-    const expected = "09-02-2024 4PM";
+    const expected = "09-02-2024 04:00PM";
     expect(extractDateTimeString(input)).toEqual(expected);
   });
 
@@ -97,7 +103,7 @@ describe("extractDateTimeString Test Suite", () => {
 
   it('should extract "10PM" from the string "10PM example text"', () => {
     const input = "10PM example text";
-    const expected = "2024-01-16 10PM";
+    const expected = "2024-01-16 10:00PM";
     expect(extractDateTimeString(input)).toEqual(expected);
   });
 
@@ -115,7 +121,13 @@ describe("extractDateTimeString Test Suite", () => {
 
   it('should extract "10AM" from the string "10AM example text"', () => {
     const input = "10AM example text";
-    const expected = "2024-01-17 10AM";
+    const expected = "2024-01-17 10:00AM";
+    expect(extractDateTimeString(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    const input = "The time is 20:15:00.000Z in HH:mm:ssZ format";
+    const expected = "2024-01-16 20:15:00.000Z";
     expect(extractDateTimeString(input)).toEqual(expected);
   });
 });
@@ -360,13 +372,13 @@ describe("AddLeadingZeros Test Suite", () => {
 });
 
 describe("Testing extractDateTime function from time-decoding-utils module", () => {
-  test("should extract valid DateTime string", () => {
+  it("should extract valid DateTime string", () => {
     const input = "The date is 2025-07-01T14:30:15Z in ISO format";
     const output = extractDateTime(input);
     expect(output).toEqual("2025-07-01T14:30:15");
   });
 
-  test("should return false for invalid DateTime string", () => {
+  it("should return false for invalid DateTime string", () => {
     const input = "No date here";
     const output = extractDateTime(input);
     expect(output).toBe(false);
@@ -375,13 +387,13 @@ describe("Testing extractDateTime function from time-decoding-utils module", () 
 
 // Testing extractDate function
 describe("Testing extractDate function from time-decoding-utils module", () => {
-  test("should extract valid Date string", () => {
+  it("should extract valid Date string", () => {
     const input = "The date is 2025-07-01 in YYYY-MM-DD format";
     const output = extractDate(input);
     expect(output).toEqual("2025-07-01");
   });
 
-  test("should return false for invalid Date string", () => {
+  it("should return false for invalid Date string", () => {
     const input = "No date here";
     const output = extractDate(input);
     expect(output).toBe(false);
@@ -390,13 +402,19 @@ describe("Testing extractDate function from time-decoding-utils module", () => {
 
 // Testing extractTime function
 describe("Testing extractTime function from time-decoding-utils module", () => {
-  test("should extract valid Time string", () => {
+  it("should extract valid Time string", () => {
     const input = "The time is 14:30:15Z in HH:mm:ssZ format";
     const output = extractTime(input);
     expect(output).toEqual("14:30:15Z");
   });
 
-  test("should return false for invalid Time string", () => {
+  it("should extract valid Time string", () => {
+    const input = "The time is 12:30:00Z in HH:mm:ssZ format";
+    const output = extractTime(input);
+    expect(output).toEqual("12:30:00Z");
+  });
+
+  it("should return false for invalid Time string", () => {
     const input = "No time here";
     const output = extractTime(input);
     expect(output).toBe(false);
@@ -404,31 +422,31 @@ describe("Testing extractTime function from time-decoding-utils module", () => {
 });
 
 describe("Testing addLeadingZeros function from time-decoding-utils module", () => {
-  test("if all parts of date have correct number of digits, return date as it is", () => {
+  it("if all parts of date have correct number of digits, return date as it is", () => {
     const input = "2025-07-01";
     const result = addLeadingZeros(input);
     expect(result).toEqual("2025-07-01");
   });
 
-  test("if parts of date are having less digits, add leading zeros", () => {
+  it("if parts of date are having less digits, add leading zeros", () => {
     const input = "2024-7-1";
     const result = addLeadingZeros(input);
     expect(result).toEqual("2024-07-01");
   });
 
-  test("if year is 2-digit and >=24, consider it as 20xx", () => {
+  it("if year is 2-digit and >=24, consider it as 20xx", () => {
     const input = "29-7-1";
     const result = addLeadingZeros(input);
     expect(result).toEqual("2029-07-01");
   });
 
-  test("if year is 2-digit and it is in last part, consider it as 20xx", () => {
+  it("if year is 2-digit and it is in last part, consider it as 20xx", () => {
     const input = "7-1-29";
     const result = addLeadingZeros(input);
     expect(result).toEqual("07-01-2029");
   });
 
-  test("should throw an error for invalid date format", () => {
+  it("should throw an error for invalid date format", () => {
     const input = "7-1";
     expect(() => addLeadingZeros(input)).toThrowError(
       new Error("Invalid date format"),
@@ -438,13 +456,13 @@ describe("Testing addLeadingZeros function from time-decoding-utils module", () 
 
 // Testing replaceSlashWithHyphen function
 describe("Testing replaceSlashWithHyphen function from time-decoding-utils module", () => {
-  test("should replace all slashes with hyphens in the date string", () => {
+  it("should replace all slashes with hyphens in the date string", () => {
     const input = "07/01/2025";
     const result = replaceSlashWithHyphen(input);
     expect(result).toEqual("07-01-2025");
   });
 
-  test("if there are no slashes in the input, should return the input string as it is", () => {
+  it("if there are no slashes in the input, should return the input string as it is", () => {
     const input = "07-01-2025";
     const result = replaceSlashWithHyphen(input);
     expect(result).toEqual("07-01-2025");
