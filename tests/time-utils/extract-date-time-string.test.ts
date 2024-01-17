@@ -6,7 +6,7 @@ import {
   extractTime,
   replaceSlashWithHyphen,
 } from "../../src";
-import {advanceTo, clear} from "jest-date-mock";
+import { advanceTo, clear } from "jest-date-mock";
 
 describe("extractDateTimeString Test Suite", () => {
   beforeAll(() => {

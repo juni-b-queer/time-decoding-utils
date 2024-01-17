@@ -1,6 +1,10 @@
-import {add, addDays, addMonths, addWeeks} from "date-fns";
-import {convertAdditiveTimeToDate, processClearPhrases, processTimeUnits,} from "../../src";
-import {advanceTo, clear} from "jest-date-mock";
+import { add, addDays, addMonths, addWeeks } from "date-fns";
+import {
+  convertAdditiveTimeToDate,
+  processClearPhrases,
+  processTimeUnits,
+} from "../../src";
+import { advanceTo, clear } from "jest-date-mock";
 
 describe("convertAdditiveTimeToDate Correctly generates the right date", () => {
   let currentTime: Date;

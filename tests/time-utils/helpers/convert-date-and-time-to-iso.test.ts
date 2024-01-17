@@ -1,5 +1,5 @@
-import {convertDateAndTimeToIso} from "../../../src";
-import {advanceTo, clear} from "jest-date-mock";
+import { convertDateAndTimeToIso } from "../../../src";
+import { advanceTo, clear } from "jest-date-mock";
 
 describe("convertDateAndTimeToIso Test Suite", () => {
   beforeAll(() => {

@@ -1,6 +1,4 @@
-import {
-  extractTimeFromInput,
-} from "../../src";
+import { extractTimeFromInput } from "../../src";
 import { advanceTo, clear } from "jest-date-mock";
 
 describe("extractTimeFromInput Test Suite", () => {

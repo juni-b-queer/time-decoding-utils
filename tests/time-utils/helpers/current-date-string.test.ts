@@ -1,6 +1,6 @@
 import moment from "moment";
-import {getCurrentDateString, getNextDateTime} from "../../../src";
-import {advanceTo, clear} from "jest-date-mock";
+import { getCurrentDateString, getNextDateTime } from "../../../src";
+import { advanceTo, clear } from "jest-date-mock";
 
 describe("getCurrentDateString tests", () => {
   afterEach(() => {

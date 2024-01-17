@@ -1,5 +1,5 @@
 import * as moment from "moment-timezone";
-import {extractTimezone } from "../../../src";
+import { extractTimezone } from "../../../src";
 
 describe("extractTimezone function", () => {
   const timezoneNames = moment.tz.names();

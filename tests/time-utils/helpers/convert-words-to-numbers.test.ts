@@ -1,4 +1,4 @@
-import {convertWordsToNumbers} from "../../../src";
+import { convertWordsToNumbers } from "../../../src";
 
 describe("convertWordsToNumbers Correctly converts word numbers to digit numbers", () => {
   test("Test example: one", () => {
