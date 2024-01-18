@@ -83,7 +83,7 @@ export function extractTime(input: string): string | boolean {
     /\b\d{1,2}:\d{2}:\d{2}Z\b/g,
     /(\b\d{1,2}:\d{2}\s?(AM|PM)\b)/gi,
   ];
-  input = input.toUpperCase()
+  input = input.toUpperCase();
 
   // Try finding time in each format
   for (const timeFormat of timeFormats) {
@@ -94,7 +94,7 @@ export function extractTime(input: string): string | boolean {
   }
 
   // If not found, try matching hours and meridiem
-  let match = input.match(/(\b\d{1,2}\s?(AM|PM)\b)/gi);
+  const match = input.match(/(\b\d{1,2}\s?(AM|PM)\b)/gi);
   if (match) {
     const time = match[0].replaceAll(" ", "");
     const hourPart = time.split(/\D/)[0].padStart(2, "0");
