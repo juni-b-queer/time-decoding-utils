@@ -101,7 +101,7 @@ export function extractTime(input: string): string | boolean {
     if (match) {
       let hourNumber: number;
       let minuteNumber: number;
-      let matchValue = match[0];
+      const matchValue = match[0];
 
       const timeMatches = matchValue
         .replace(/[a-z]/gi, "")
