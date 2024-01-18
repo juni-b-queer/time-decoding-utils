@@ -75,27 +75,28 @@ export function extractDate(input: string): string | boolean {
 export function extractTime(input: string): string | boolean {
   // Define all time formats in an array
   const timeFormats = [
-    /(\b\d{1,2}:\d{2}:\d{2}.\d{1,3}\s?(AM|PM|am|pm|Am|Pm|aM|pM)\b)/gi,
+    /(\b\d{1,2}:\d{2}:\d{2}.\d{1,3}\s?(AM|PM)\b)/gi,
     / \b\d{1,2}:\d{2}:\d{2}.\d{1,3}\b /g,
     /\b\d{1,2}:\d{2}:\d{2}.\d{1,3}Z\b/g,
-    /(\b\d{1,2}:\d{2}:\d{2}\s?(AM|PM|am|pm|Am|Pm|aM|pM)\b)/gi,
+    /(\b\d{1,2}:\d{2}:\d{2}\s?(AM|PM)\b)/gi,
     / \b\d{1,2}:\d{2}:\d{2}\b /g,
     /\b\d{1,2}:\d{2}:\d{2}Z\b/g,
-    /(\b\d{1,2}:\d{2}\s?(AM|PM|am|pm|Am|Pm|aM|pM)\b)/gi,
+    /(\b\d{1,2}:\d{2}\s?(AM|PM)\b)/gi,
   ];
+  input = input.toUpperCase()
 
   // Try finding time in each format
   for (const timeFormat of timeFormats) {
     const match = input.match(timeFormat);
     if (match) {
-      return match[0].toUpperCase().replaceAll(" ", "");
+      return match[0].replaceAll(" ", "");
     }
   }
 
   // If not found, try matching hours and meridiem
-  let match = input.match(/(\b\d{1,2}\s?(AM|PM|am|pm|Am|Pm)\b)/gi);
+  let match = input.match(/(\b\d{1,2}\s?(AM|PM)\b)/gi);
   if (match) {
-    const time = match[0].replaceAll(" ", "").toUpperCase();
+    const time = match[0].replaceAll(" ", "");
     const hourPart = time.split(/\D/)[0].padStart(2, "0");
     const meridiemPart = time.slice(-2);
 
