@@ -203,6 +203,56 @@ describe("extractTimeFromInput Test Suite", () => {
   });
 
   it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    const input = "The time is 12:15:00.000 PM in HH:mm:ssZ format";
+    const expected = "2024-01-16T18:15:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    const input = "The time is 12:15:00 PM in HH:mm:ssZ format";
+    const expected = "2024-01-16T18:15:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    const input = "The time is 12:15 PM in HH:mm:ssZ format";
+    const expected = "2024-01-16T18:15:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    advanceTo(new Date("2024-01-16T11:00:00")); // Mock the date
+    const input = "The time is 12 PM in HH:mm:ssZ format";
+    const expected = "2024-01-16T18:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    const input = "The time is 12:15:00.000PM in HH:mm:ssZ format";
+    const expected = "2024-01-16T18:15:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    const input = "The time is 12:15:00PM in HH:mm:ssZ format";
+    const expected = "2024-01-16T18:15:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    const input = "The time is 12:15PM in HH:mm:ssZ format";
+    const expected = "2024-01-16T18:15:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
+    advanceTo(new Date("2024-01-16T11:00:00")); // Mock the date
+    const input = "The time is 12PM in HH:mm:ssZ format";
+    const expected = "2024-01-16T18:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("should extract valid Time string from 20:15:00.000Z in UTC when time ends in Z", () => {
     const input = "to do a thing on 12/24/2025 at 12PM America/New York";
     const expected = "2025-12-24T17:00:00.000Z";
     expect(extractTimeFromInput(input)).toEqual(expected);

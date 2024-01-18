@@ -73,39 +73,38 @@ export function extractDate(input: string): string | boolean {
 }
 
 export function extractTime(input: string): string | boolean {
-  let outputTime = "";
+  // Define all time formats in an array
   const timeFormats = [
-    /(\b\d{1,2}:\d{2}(AM|PM|am|pm)\b)/gi,
-    /\b\d{1,2}:\d{2}:\d{2}Z\b/g,
+    /(\b\d{1,2}:\d{2}:\d{2}.\d{1,3}\s?(AM|PM|am|pm|Am|Pm|aM|pM)\b)/gi,
+    / \b\d{1,2}:\d{2}:\d{2}.\d{1,3}\b /g,
     /\b\d{1,2}:\d{2}:\d{2}.\d{1,3}Z\b/g,
+    /(\b\d{1,2}:\d{2}:\d{2}\s?(AM|PM|am|pm|Am|Pm|aM|pM)\b)/gi,
+    / \b\d{1,2}:\d{2}:\d{2}\b /g,
+    /\b\d{1,2}:\d{2}:\d{2}Z\b/g,
+    /(\b\d{1,2}:\d{2}\s?(AM|PM|am|pm|Am|Pm|aM|pM)\b)/gi,
   ];
 
-  for (const timePattern of timeFormats) {
-    const timeMatch = input.match(timePattern);
-    if (timeMatch) {
-      outputTime = timeMatch[0];
-      outputTime = outputTime.toUpperCase(); // Convert the output to uppercase
-      break;
-    }
-  }
-  if (input.match(/(\b\d{1,2}(AM|PM|am|pm)\b)/gi) && outputTime === "") {
-    const match = input.match(/(\d+)(AM|PM|am|pm)/);
+  // Try finding time in each format
+  for (const timeFormat of timeFormats) {
+    const match = input.match(timeFormat);
     if (match) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
-      let [_, hour, meridiem] = match;
-
-      // pad with 0 if it's in single digit format
-      hour = hour.padStart(2, "0");
-
-      outputTime = `${hour}:00${meridiem}`;
+      return match[0].toUpperCase().replaceAll(" ", "");
     }
   }
-  if (outputTime === "") {
-    return false;
-  }
-  return outputTime.toUpperCase();
-}
 
+  // If not found, try matching hours and meridiem
+  let match = input.match(/(\b\d{1,2}\s?(AM|PM|am|pm|Am|Pm)\b)/gi);
+  if (match) {
+    const time = match[0].replaceAll(" ", "").toUpperCase();
+    const hourPart = time.split(/\D/)[0].padStart(2, "0");
+    const meridiemPart = time.slice(-2);
+
+    return `${hourPart}:00${meridiemPart}`;
+  }
+
+  // If no matches, return false
+  return false;
+}
 export function addLeadingZeros(date: string): string {
   const splitDate = date.split("-");
 
