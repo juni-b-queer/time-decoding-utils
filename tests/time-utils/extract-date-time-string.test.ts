@@ -419,6 +419,56 @@ describe("Testing extractTime function from time-decoding-utils module", () => {
     const output = extractTime(input);
     expect(output).toBe(false);
   });
+
+  it("should return 12:00AM for 12Am", () => {
+    const input = "12Am";
+    const output = extractTime(input);
+    expect(output).toBe("12:00AM");
+  });
+
+  it("should return 01:00PM from 1Pm", () => {
+    const input = "1Pm";
+    const output = extractTime(input);
+    expect(output).toBe("01:00PM");
+  });
+
+  it("should return 12:00AM for inputs formatted as 'HH am/pm'", () => {
+    const input = "12 Am";
+    const output = extractTime(input);
+    expect(output).toBe("12:00AM");
+  });
+
+  it("should return 12:00AM for inputs formatted as 'HH:mmam/pm'", () => {
+    const input = "12:00Am";
+    const output = extractTime(input);
+    expect(output).toBe("12:00AM");
+  });
+  it("should return 12:00AM for inputs formatted as 'HH:mm am/pm'", () => {
+    const input = "12:00 AM";
+    const output = extractTime(input);
+    expect(output).toBe("12:00AM");
+  });
+  it("should return 12:00:00AM for inputs formatted as 'HH:mm:ssam/pm'", () => {
+    const input = "12:00:00AM";
+    const output = extractTime(input);
+    expect(output).toBe("12:00:00AM");
+  });
+  it("should return 12:00:00AM for inputs formatted as 'HH:mm:ss am/pm'", () => {
+    const input = "12:00:00 AM";
+    const output = extractTime(input);
+    expect(output).toBe("12:00:00AM");
+  });
+  it("should return 12:00:00.000AM for inputs formatted as 'HH:mm:ss.sss am/pm'", () => {
+    const input = "12:00:00.000 AM";
+    const output = extractTime(input);
+    expect(output).toBe("12:00:00.000AM");
+  });
+
+  it("should return 12:00:00.000Z for inputs formatted as 'HH:mm:ss.sssZ'", () => {
+    const input = "12:00:00.000Z";
+    const output = extractTime(input);
+    expect(output).toBe("12:00:00.000Z");
+  });
 });
 
 describe("Testing addLeadingZeros function from time-decoding-utils module", () => {

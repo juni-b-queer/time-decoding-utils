@@ -216,7 +216,7 @@ export function extractTimezone(input: string): boolean | string {
 }
 
 export function extractTimezoneAbbreviation(input: string) {
-  let foundTimezones = timezoneAbbreviations.filter((timezone) => {
+  const foundTimezones = timezoneAbbreviations.filter((timezone) => {
     const regex = new RegExp("\\b" + timezone + "\\b", "g");
     return regex.test(input.toUpperCase());
   });

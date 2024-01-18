@@ -29,6 +29,11 @@ describe("extractTimezone function", () => {
     const inputText = "12-2-24 4PM PST";
     expect(extractTimezone(inputText)).toEqual("America/Ensenada");
   });
+
+  it('should return date for "12-2-24 4PM" input for EDT', () => {
+    const inputText = "12-2-24 4PM EST";
+    expect(extractTimezone(inputText)).toEqual("EST");
+  });
 });
 
 describe("extractTimezoneAbbreviation function", () => {

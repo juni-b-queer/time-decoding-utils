@@ -32,7 +32,6 @@ export function convertDateAndTimeToIso(
     input = addLeadingZeros(getNextDateTime(timeString));
   }
 
-  // const formats = ["MM-DD-YYYY ha", "MM-DD-YYYY ha A", "MM-DD-YYYY hh:mma", "YYYY-MM-DD ha", "YYYY-MM-DD ha A", "YYYY-MM-DD hh:mma", "YYYY-MM-DDTHH:mm:ss", "MM-DD-YYYY", "YYYY-MM-DD"];
   const formats = [
     "MM-DD-YYYY ha",
     "MM-DD-YYYY h:mma",
