@@ -81,7 +81,6 @@ export function extractTime(input: string): string | boolean {
     /(\b\d{1,2}:\d{2}:\d{2}\s?(AM|PM)\b)/gi,
     / \b\d{1,2}:\d{2}:\d{2}\b /g,
     /\b\d{1,2}:\d{2}:\d{2}Z\b/g,
-    /(\b\d{1,2}:\d{2}\s?(AM|PM)\b)/gi,
   ];
   input = input.toUpperCase();
 
@@ -93,14 +92,72 @@ export function extractTime(input: string): string | boolean {
     }
   }
 
+  const shortFormats = [
+    /(\b\d{1,2}:\d{2}\s?(AM|PM)\b)/gi,
+    /(\b\d{1,2}:\d{2}\b)/gi,
+  ];
+  for (const shortFormat of shortFormats) {
+    const match = input.match(shortFormat);
+    if (match) {
+      let hourNumber: number;
+      let minuteNumber: number;
+      let matchValue = match[0];
+
+      const timeMatches = matchValue
+        .replace(/[a-z]/gi, "")
+        .match(/\b\d{1,2}\b/g);
+      if (timeMatches) {
+        hourNumber = Number(timeMatches[0]);
+        minuteNumber = Number(timeMatches[1]);
+
+        let meridiemPart = ["PM", "AM"].includes(
+          matchValue.slice(-2).toUpperCase(),
+        )
+          ? matchValue.slice(-2).toUpperCase()
+          : "";
+
+        while (hourNumber > 12) {
+          hourNumber = hourNumber - 12;
+          meridiemPart = "PM";
+        }
+        return `${hourNumber.toString().padStart(2, "0")}:${minuteNumber.toString().padStart(2, "0")}${meridiemPart}`;
+      }
+    }
+  }
+
   // If not found, try matching hours and meridiem
   const match = input.match(/(\b\d{1,2}\s?(AM|PM)\b)/gi);
   if (match) {
     const time = match[0].replaceAll(" ", "");
     const hourPart = time.split(/\D/)[0].padStart(2, "0");
-    const meridiemPart = time.slice(-2);
+    let meridiemPart = time.slice(-2);
 
-    return `${hourPart}:00${meridiemPart}`;
+    let hourNumber = Number(hourPart);
+
+    if (hourNumber > 12 && meridiemPart == "AM") {
+      while (hourNumber > 12) {
+        hourNumber = hourNumber - 12;
+      }
+      meridiemPart = "PM";
+    } else if (hourNumber == 24) {
+      hourNumber = 12;
+      meridiemPart = "AM";
+    } else if (hourNumber > 24) {
+      while (hourNumber > 23) {
+        hourNumber = hourNumber - 12;
+        meridiemPart = meridiemPart === "AM" ? "PM" : "AM";
+      }
+      if (hourNumber > 12) {
+        hourNumber = hourNumber - 12;
+      }
+    }
+
+    if (hourNumber == 0) {
+      hourNumber = 12;
+      meridiemPart = "AM";
+    }
+
+    return `${hourNumber.toString().padStart(2, "0")}:00${meridiemPart}`;
   }
 
   // If no matches, return false

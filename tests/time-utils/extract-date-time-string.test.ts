@@ -386,6 +386,7 @@ describe("Testing extractDateTime function from time-decoding-utils module", () 
 });
 
 // Testing extractDate function
+
 describe("Testing extractDate function from time-decoding-utils module", () => {
   it("should extract valid Date string", () => {
     const input = "The date is 2025-07-01 in YYYY-MM-DD format";
@@ -402,6 +403,24 @@ describe("Testing extractDate function from time-decoding-utils module", () => {
 
 // Testing extractTime function
 describe("Testing extractTime function from time-decoding-utils module", () => {
+  it("should return 12:00PM for 48AM", () => {
+    const input = "48AM";
+    const output = extractTime(input);
+    expect(output).toBe("12:00PM");
+  });
+
+  it("should return 12:00AM for 48PM", () => {
+    const input = "48PM";
+    const output = extractTime(input);
+    expect(output).toBe("12:00AM");
+  });
+
+  it("should return 12:00PM for 99PM", () => {
+    const input = "99PM";
+    const output = extractTime(input);
+    expect(output).toBe("03:00AM");
+  });
+
   it("should extract valid Time string", () => {
     const input = "The time is 14:30:15Z in HH:mm:ssZ format";
     const output = extractTime(input);
@@ -438,11 +457,6 @@ describe("Testing extractTime function from time-decoding-utils module", () => {
     expect(output).toBe("12:00AM");
   });
 
-  it("should return 12:00AM for inputs formatted as 'HH:mmam/pm'", () => {
-    const input = "12:00Am";
-    const output = extractTime(input);
-    expect(output).toBe("12:00AM");
-  });
   it("should return 12:00AM for inputs formatted as 'HH:mm am/pm'", () => {
     const input = "12:00 AM";
     const output = extractTime(input);
@@ -468,6 +482,47 @@ describe("Testing extractTime function from time-decoding-utils module", () => {
     const input = "12:00:00.000Z";
     const output = extractTime(input);
     expect(output).toBe("12:00:00.000Z");
+  });
+
+  it("should return 12:00 for 12Am", () => {
+    const input = "12:00";
+    const output = extractTime(input);
+    expect(output).toBe("12:00");
+  });
+
+  it("should return 1:00 for 1:00", () => {
+    const input = "1:00";
+    const output = extractTime(input);
+    expect(output).toBe("01:00");
+  });
+
+  it("should return 12:00PM for 48:00", () => {
+    const input = "48:00";
+    const output = extractTime(input);
+    expect(output).toBe("12:00PM");
+  });
+
+  it("should return 01:59 for 1:59", () => {
+    const input = "1:59";
+    const output = extractTime(input);
+    expect(output).toBe("01:59");
+  });
+
+  it("should return 11:59PM for 23:59", () => {
+    const input = "23:59";
+    const output = extractTime(input);
+    expect(output).toBe("11:59PM");
+  });
+
+  it("should return 12:00AM for inputs formatted as 'HH:mmam/pm'", () => {
+    const input = "12:00Am";
+    const output = extractTime(input);
+    expect(output).toBe("12:00AM");
+  });
+  it("should return 12:00AM for inputs formatted as 'HH:mmam/pm'", () => {
+    const input = "12:20Am";
+    const output = extractTime(input);
+    expect(output).toBe("12:20AM");
   });
 });
 
@@ -505,6 +560,7 @@ describe("Testing addLeadingZeros function from time-decoding-utils module", () 
 });
 
 // Testing replaceSlashWithHyphen function
+
 describe("Testing replaceSlashWithHyphen function from time-decoding-utils module", () => {
   it("should replace all slashes with hyphens in the date string", () => {
     const input = "07/01/2025";
