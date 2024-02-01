@@ -1,6 +1,6 @@
 {
   "name": "time-decoding-utils",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Utilities to help decode a variation of time and dates from input text",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
