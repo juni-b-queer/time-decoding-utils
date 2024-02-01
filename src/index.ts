@@ -18,7 +18,6 @@ export {
 //Functions for converting additive time
 export {
   convertAdditiveTimeToDate,
-  processClearPhrases,
   processTimeUnits,
 } from "./time-utils/convert-additive-time-to-date";
 
@@ -31,6 +30,7 @@ export {
   extractTimezoneAbbreviation,
 } from "./time-utils/helpers/extract-timezone";
 export { convertDateAndTimeToIso } from "./time-utils/helpers/convert-date-and-time-to-iso";
+export { extractTimePartsAndUnits } from "./time-utils/helpers/extract-time-parts-and-units";
 export {
   getCurrentDateString,
   getNextDateTime,
