@@ -35,6 +35,18 @@ describe("convertAdditiveTimeToDate Correctly generates the right date", () => {
     );
   });
 
+  it("Test example: a year", () => {
+    expect(convertAdditiveTimeToDate("a year")).toBe(
+        add(currentTime, { ["years"]: Number("1") }).toISOString(),
+    );
+  });
+
+  it("Test example: an hour", () => {
+    expect(convertAdditiveTimeToDate("an hour")).toBe(
+        add(currentTime, { ["hours"]: Number("1") }).toISOString(),
+    );
+  });
+
   it("Test example: three hours and 20 minutes", () => {
     expect(convertAdditiveTimeToDate("three hours and 20 minutes")).toBe(
       add(currentTime, {

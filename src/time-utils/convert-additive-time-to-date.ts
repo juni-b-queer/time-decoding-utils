@@ -25,6 +25,9 @@ export function processTimeUnits(
   timeData: string,
 ): [Date, boolean] {
   let [value, timeUnit] = timeData.trim().split(" ");
+  if(value == 'a' || value === 'an'){
+    value = 'one'
+  }
   if (
     !TIME_UNITS.includes(timeUnit) &&
     !TIME_UNITS.includes(timeUnit.slice(0, -1))
