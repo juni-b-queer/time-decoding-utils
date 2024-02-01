@@ -105,7 +105,6 @@ describe("convertDateAndTimeToIso Test Suite", () => {
     });
   });
 
-
   describe("YYYY-MM-DD Format", () => {
     it('should convert "2024-12-24" to ISO timestamp', () => {
       const input = "2024-12-24";
@@ -133,9 +132,4 @@ describe("convertDateAndTimeToIso Test Suite", () => {
       expect(() => convertDateAndTimeToIso(input)).toThrow(Error);
     });
   });
-
 });
-
-
-
-

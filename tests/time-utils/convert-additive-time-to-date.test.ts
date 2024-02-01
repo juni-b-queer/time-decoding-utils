@@ -1,8 +1,5 @@
-import { add, addDays, addMonths, addWeeks } from "date-fns";
-import {
-  convertAdditiveTimeToDate,
-  processTimeUnits,
-} from "../../src";
+import { add } from "date-fns";
+import { convertAdditiveTimeToDate, processTimeUnits } from "../../src";
 import { advanceTo, clear } from "jest-date-mock";
 
 describe("convertAdditiveTimeToDate Correctly generates the right date", () => {
@@ -36,19 +33,19 @@ describe("convertAdditiveTimeToDate Correctly generates the right date", () => {
 
   it("Test example: a year", () => {
     expect(convertAdditiveTimeToDate("a year")).toBe(
-        add(currentTime, { ["years"]: Number("1") }).toISOString(),
+      add(currentTime, { ["years"]: Number("1") }).toISOString(),
     );
   });
 
   it("Test example: an hour", () => {
     expect(convertAdditiveTimeToDate("an hour")).toBe(
-        add(currentTime, { ["hours"]: Number("1") }).toISOString(),
+      add(currentTime, { ["hours"]: Number("1") }).toISOString(),
     );
   });
 
   it("Test example: an hour and a half", () => {
     expect(convertAdditiveTimeToDate("an hour and a half")).toBe(
-        add(currentTime, { ["minutes"]: Number("90") }).toISOString(),
+      add(currentTime, { ["minutes"]: Number("90") }).toISOString(),
     );
   });
 

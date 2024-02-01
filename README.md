@@ -40,7 +40,6 @@ There are many other date/time helper functions available too make working with,
 **[`processTimeUnits`](#processtimeunits)**\
 **[`extractTimePartsAndUnits`](#extracttimepartsandunits)**
 
-
 ### Helper functions used throughout the package
 
 **[`convertWordsToNumbers`](#convertwordstonumbers)**\
@@ -301,7 +300,7 @@ This function converts the time-related phrases in a string into a time specific
 
 **Parameters:**
 
-- _timeString_:  A string containing time-related phrases.
+- _timeString_: A string containing time-related phrases.
 
 **Returns:**
 
@@ -321,13 +320,11 @@ This function handles time-related phrases in a string that include "half". It i
 
 **Parameters:**
 
-- _timeString_:  A string containing time-related phrases, which may include variations of "half".
+- _timeString_: A string containing time-related phrases, which may include variations of "half".
 
 **Returns:**
 
 - _string|boolean_: A time string with all "half" phrases replaced by equivalent time in minutes, or `false` if the resulting string is empty.
-
-
 
 ## Function in `extract-timezone.ts`
 
@@ -445,7 +442,6 @@ This function calculates the next date-time string based on the current time and
 **Returns:**
 
 - _string_: The next date-time as a string in the format "YYYY-MM-DD hh:mma". If no input is provided, it will return the current date-time string.
-
 
 # Credits
 

@@ -6,7 +6,6 @@ import {
   extractTime,
 } from "../extract-date-time-string";
 import { getNextDateTime } from "./current-date-string";
-import {extractTimezone} from "./extract-timezone";
 
 export function convertDateAndTimeToIso(
   input: string,

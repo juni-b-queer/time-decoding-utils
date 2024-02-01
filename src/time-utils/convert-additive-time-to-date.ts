@@ -1,6 +1,6 @@
-import { add, addDays, addWeeks, addMonths, addYears } from "date-fns";
+import { add } from "date-fns";
 import { convertWordsToNumbers } from "./helpers/convert-words-to-numbers";
-import {extractTimePartsAndUnits} from "./helpers/extract-time-parts-and-units";
+import { extractTimePartsAndUnits } from "./helpers/extract-time-parts-and-units";
 
 const TIME_UNITS = [
   "second",
@@ -13,14 +13,13 @@ const TIME_UNITS = [
   "year",
 ];
 
-
 export function processTimeUnits(
   date: Date,
   timeData: string,
 ): [Date, boolean] {
   let [value, timeUnit] = timeData.trim().split(" ");
-  if(value == 'a' || value === 'an'){
-    value = 'one'
+  if (value == "a" || value === "an") {
+    value = "one";
   }
   if (
     !TIME_UNITS.includes(timeUnit) &&
@@ -41,14 +40,14 @@ export function processTimeUnits(
 
 export function convertAdditiveTimeToDate(timeString: string): string {
   let invalidInput = false;
-  let timeParts = extractTimePartsAndUnits(timeString)
-  if(!timeParts){
+  const timeParts = extractTimePartsAndUnits(timeString);
+  if (!timeParts) {
     return "";
   }
 
   const currentTime: Date = new Date();
   let date = new Date(currentTime.getTime());
-  //@ts-ignore
+  //@ts-expect-error time part is okay as is
   timeParts.forEach((timePart) => {
     timePart.replaceAll(",", "");
     let newDate: Date;
@@ -57,7 +56,7 @@ export function convertAdditiveTimeToDate(timeString: string): string {
     // ) {
     //   newDate = processClearPhrases(date, timePart);
     // } else {
-      [newDate, invalidInput] = processTimeUnits(date, timePart);
+    [newDate, invalidInput] = processTimeUnits(date, timePart);
     // }
     date = newDate;
     if (invalidInput) return;

@@ -175,15 +175,10 @@ const timezoneAbbreviations = [
   "PDT",
   "MDT",
   "CDT",
-  "EDT"
+  "EDT",
 ];
 
-const daylightToStandardAbbreviations = [
-    "PDT",
-    "MDT",
-    "CDT",
-    "EDT"
-]
+const daylightToStandardAbbreviations = ["PDT", "MDT", "CDT", "EDT"];
 export function extractTimezone(input: string): boolean | string {
   let foundTimezones = moment.tz
     .names()
@@ -222,13 +217,15 @@ export function extractTimezone(input: string): boolean | string {
 
   if (foundTimezones.length === 0) return false;
   //return longest string in foundTimezones
-  let foundTZ = foundTimezones.reduce((a, b) => (a.length > b.length ? a : b));
-  if(daylightToStandardAbbreviations.includes(foundTZ)){
-    let updatedTZ = foundTZ.replace('D', 'S')
+  const foundTZ = foundTimezones.reduce((a, b) =>
+    a.length > b.length ? a : b,
+  );
+  if (daylightToStandardAbbreviations.includes(foundTZ)) {
+    const updatedTZ = foundTZ.replace("D", "S");
     input = input.replace(foundTZ, updatedTZ);
-    return extractTimezone(input)
+    return extractTimezone(input);
   }
-  return foundTZ
+  return foundTZ;
 }
 
 export function extractTimezoneAbbreviation(input: string) {
@@ -237,9 +234,9 @@ export function extractTimezoneAbbreviation(input: string) {
     return regex.test(input.toUpperCase());
   });
   if (foundTimezones.length === 0) return false;
-  let foundTZ =  foundTimezones.reduce((a, b) => (a.length > b.length ? a : b));
-  if(daylightToStandardAbbreviations.includes(foundTZ)){
-    foundTZ = foundTZ.replace('D', 'S')
+  let foundTZ = foundTimezones.reduce((a, b) => (a.length > b.length ? a : b));
+  if (daylightToStandardAbbreviations.includes(foundTZ)) {
+    foundTZ = foundTZ.replace("D", "S");
   }
   return foundTZ;
 }
