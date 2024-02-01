@@ -37,8 +37,9 @@ There are many other date/time helper functions available too make working with,
 #### Functions for converting additive time
 
 **[`convertAdditiveTimeToDate`](#convertadditivetimetodate)**\
-**[`processClearPhrases`](#processclearphrases)**\
-**[`processTimeUnits`](#processtimeunits)**
+**[`processTimeUnits`](#processtimeunits)**\
+**[`extractTimePartsAndUnits`](#extracttimepartsandunits)**
+
 
 ### Helper functions used throughout the package
 
@@ -233,27 +234,6 @@ This function converts additive time phrases to a date string in ISO format.
 
 - _string_: The date resulting from adding the time to current date, or an empty string if an invalid input was given.
 
-### processClearPhrases
-
-**Usage:**
-
-```typescript
-processClearPhrases(date: Date, phrase: string): Date;
-```
-
-**Description:**
-
-This function interprets clear phrases like 'tomorrow', 'next week', 'next month' and modifies the date accordingly.
-
-**Parameters:**
-
-- `date` (_Date_): The starting date.
-- `phrase` (_string_): The key phrase.
-
-**Returns:**
-
-- _Date_: The new date after adding the time specified by the phrase.
-
 ### processTimeUnits
 
 **Usage:**
@@ -302,6 +282,52 @@ This function converts word-based numerical values into actual numbers. It's cap
 **Exceptions:**
 
 If the function encounters an unrecognizable word that isn't a pre-defined number representation, it will throw an Error indicating 'Unknown number: ' followed by the unrecognized word.
+
+## Functions in `extract-time-parts-and-units.ts`
+
+This file contains two main functions and some helper functions used for parsing and extracting time units from time related strings. They provide functionality to parse user-friendly time phrases and generate the respective time parts.
+
+### extractTimePartsAndUnits
+
+**Usage:**
+
+```typescript
+extractTimePartsAndUnits(timeString: string): any[]|boolean;
+```
+
+**Description:**
+
+This function converts the time-related phrases in a string into a time specification. It replaces phrases such as "tomorrow", "next week", "next month", and "next year" with numeric representations and handles the details when the phrase includes "half". The function splits the time specification and maps each component separately. If the original string was invalid (or if no components are extracted) the function will return `false`, otherwise it returns an array of time parts.
+
+**Parameters:**
+
+- _timeString_:  A string containing time-related phrases.
+
+**Returns:**
+
+- _any[]|boolean_: An array of time parts, each of which is a string in the format "X unit", where X is a integer and unit is a time unit, such as "minute", "hour", "day", "week", "month" or "year". If no valid input is found, returns `false`.
+
+### handleHalf
+
+**Usage:**
+
+```typescript
+handleHalf(timeString: string): string|boolean;
+```
+
+**Description:**
+
+This function handles time-related phrases in a string that include "half". It identifies and replaces variations of "half", whether it appears as "half a X" or "X and a half" (where X is a time unit), with equivalent time in minutes. Returns false if the resulting time string is empty. Returns original time string if no matches or replacements were made.
+
+**Parameters:**
+
+- _timeString_:  A string containing time-related phrases, which may include variations of "half".
+
+**Returns:**
+
+- _string|boolean_: A time string with all "half" phrases replaced by equivalent time in minutes, or `false` if the resulting string is empty.
+
+
 
 ## Function in `extract-timezone.ts`
 
@@ -419,6 +445,7 @@ This function calculates the next date-time string based on the current time and
 **Returns:**
 
 - _string_: The next date-time as a string in the format "YYYY-MM-DD hh:mma". If no input is provided, it will return the current date-time string.
+
 
 # Credits
 

@@ -1,5 +1,6 @@
 import { add, addDays, addWeeks, addMonths, addYears } from "date-fns";
 import { convertWordsToNumbers } from "./helpers/convert-words-to-numbers";
+import {extractTimePartsAndUnits} from "./helpers/extract-time-parts-and-units";
 
 const TIME_UNITS = [
   "second",
@@ -12,13 +13,6 @@ const TIME_UNITS = [
   "year",
 ];
 
-export function processClearPhrases(date: Date, phrase: string): Date {
-  if (phrase === "tomorrow") return addDays(date, 1);
-  if (phrase === "next week") return addWeeks(date, 1);
-  if (phrase === "next month") return addMonths(date, 1);
-  if (phrase === "next year") return addYears(date, 1);
-  return date;
-}
 
 export function processTimeUnits(
   date: Date,
@@ -47,56 +41,24 @@ export function processTimeUnits(
 
 export function convertAdditiveTimeToDate(timeString: string): string {
   let invalidInput = false;
-  // Extract the time specification from the input string
-  timeString = timeString
-    .replace(/next week/gi, "nextweek")
-    .replace(/next month/gi, "nextmonth")
-    .replace(/next year/gi, "nextyear");
-  let timeSpecArray: RegExpMatchArray | null | undefined = timeString.match(
-    /(\w+|\d+)\s(year|month|week|day|hour|minute|second|and)s?/gi,
-  );
-  const nextTimeSpecArray: RegExpMatchArray | null = timeString.match(
-    /(tomorrow|nextweek|nextmonth|nextyear)/gi,
-  );
-
-  if (timeSpecArray !== undefined && timeSpecArray !== null) {
-    if (nextTimeSpecArray !== undefined && nextTimeSpecArray !== null) {
-      nextTimeSpecArray.forEach((item) => {
-        timeSpecArray?.push(item);
-      });
-    }
-  } else if (nextTimeSpecArray !== undefined && nextTimeSpecArray !== null) {
-    timeSpecArray = nextTimeSpecArray;
-  } else {
-    //@ts-expect-error just set it to an empty array
-    timeSpecArray = [];
+  let timeParts = extractTimePartsAndUnits(timeString)
+  if(!timeParts){
+    return "";
   }
-
-  //@ts-expect-error This won't fail, I've already checked them above
-  const joinedTimeSpec = timeSpecArray.join(", ");
-  const timeSpec = joinedTimeSpec
-    .replace(/nextweek/gi, "next week")
-    .replace(/nextmonth/gi, "next month")
-    .replace(/nextyear/gi, "next year");
 
   const currentTime: Date = new Date();
-  let timeParts = timeSpec.split(/[\s,]+and\s|,/).map((item) => item.trim());
-  if (timeParts.length === 1 && timeParts[0] === "") {
-    timeParts = [];
-    invalidInput = true;
-  }
   let date = new Date(currentTime.getTime());
-
+  //@ts-ignore
   timeParts.forEach((timePart) => {
     timePart.replaceAll(",", "");
     let newDate: Date;
-    if (
-      ["tomorrow", "next week", "next month", "next year"].includes(timePart)
-    ) {
-      newDate = processClearPhrases(date, timePart);
-    } else {
+    // if (
+    //   ["tomorrow", "next week", "next month", "next year"].includes(timePart)
+    // ) {
+    //   newDate = processClearPhrases(date, timePart);
+    // } else {
       [newDate, invalidInput] = processTimeUnits(date, timePart);
-    }
+    // }
     date = newDate;
     if (invalidInput) return;
   });

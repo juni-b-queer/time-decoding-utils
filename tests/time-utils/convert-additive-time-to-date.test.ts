@@ -1,7 +1,6 @@
 import { add, addDays, addMonths, addWeeks } from "date-fns";
 import {
   convertAdditiveTimeToDate,
-  processClearPhrases,
   processTimeUnits,
 } from "../../src";
 import { advanceTo, clear } from "jest-date-mock";
@@ -44,6 +43,12 @@ describe("convertAdditiveTimeToDate Correctly generates the right date", () => {
   it("Test example: an hour", () => {
     expect(convertAdditiveTimeToDate("an hour")).toBe(
         add(currentTime, { ["hours"]: Number("1") }).toISOString(),
+    );
+  });
+
+  it("Test example: an hour and a half", () => {
+    expect(convertAdditiveTimeToDate("an hour and a half")).toBe(
+        add(currentTime, { ["minutes"]: Number("90") }).toISOString(),
     );
   });
 
@@ -153,35 +158,6 @@ describe("convertAdditiveTimeToDate Correctly generates the right date from larg
     const input = "I will meet you tomorrow at 9pm";
     const expected = add(currentTime, { ["days"]: Number("1") });
     expect(convertAdditiveTimeToDate(input)).toBe(expected.toISOString());
-  });
-});
-
-describe("processClearPhrases tests", () => {
-  it("should add 1 day for 'tomorrow'", () => {
-    const currentTime = new Date();
-    const expectedResult = addDays(currentTime, 1);
-    const result = processClearPhrases(currentTime, "tomorrow");
-    expect(result).toEqual(expectedResult);
-  });
-
-  it("should add 1 week for 'next week'", () => {
-    const currentTime = new Date();
-    const expectedResult = addWeeks(currentTime, 1);
-    const result = processClearPhrases(currentTime, "next week");
-    expect(result).toEqual(expectedResult);
-  });
-
-  it("should add 1 month for 'next month'", () => {
-    const currentTime = new Date();
-    const expectedResult = addMonths(currentTime, 1);
-    const result = processClearPhrases(currentTime, "next month");
-    expect(result).toEqual(expectedResult);
-  });
-
-  it("should return the same date for unknown input", () => {
-    const currentTime = new Date();
-    const result = processClearPhrases(currentTime, "yesterday");
-    expect(result).toEqual(currentTime);
   });
 });
 
