@@ -4,17 +4,23 @@
 build:
 	npm run build
 
-patch:
+v-patch:
 	npm version patch
 
-minor:
+v-minor:
 	npm version minor
 
-major:
+v-major:
 	npm version major
 
 publish:
 	npm publish
+
+publish-patch: v-patch publish
+
+publish-minor: v-minor publish
+
+publish-major: v-major publish
 
 link:
 	bun link
