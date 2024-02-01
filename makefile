@@ -14,7 +14,7 @@ v-major:
 	npm version major
 
 publish:
-	npm publish
+	npm publish && git push
 
 publish-patch: v-patch publish
 

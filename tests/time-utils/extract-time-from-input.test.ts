@@ -317,4 +317,52 @@ describe("extractTimeFromInput Test Suite", () => {
     const expected = "";
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
+
+  it("Test example: 12/24/2024 12pm edt", () => {
+    const input = "12/24/2024 12pm edt";
+    const expected = "2024-12-24T17:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: 12/24/2024 12pm EDT", () => {
+    const input = "12/24/2024 12pm EDT";
+    const expected = "2024-12-24T17:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: 12/24/2024 12pm cdt", () => {
+    const input = "12/24/2024 12pm cdt";
+    const expected = "2024-12-24T18:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: 12/24/2024 12pm CDT", () => {
+    const input = "12/24/2024 12pm CDT";
+    const expected = "2024-12-24T18:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: 12/24/2024 12pm mdt", () => {
+    const input = "12/24/2024 12pm mdt";
+    const expected = "2024-12-24T19:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: 12/24/2024 12pm MDT", () => {
+    const input = "12/24/2024 12pm MDT";
+    const expected = "2024-12-24T19:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: 12/24/2024 12pm pdt", () => {
+    const input = "12/24/2024 12pm pdt";
+    const expected = "2024-12-24T20:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it("Test example: 12/24/2024 12pm PDT", () => {
+    const input = "12/24/2024 12pm PDT";
+    const expected = "2024-12-24T20:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
 });

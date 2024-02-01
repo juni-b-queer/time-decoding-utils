@@ -221,8 +221,8 @@ export function extractTimezone(input: string): boolean | string {
     a.length > b.length ? a : b,
   );
   if (daylightToStandardAbbreviations.includes(foundTZ)) {
-    const updatedTZ = foundTZ.replace("D", "S");
-    input = input.replace(foundTZ, updatedTZ);
+    const updatedTZ = foundTZ.toUpperCase().replace("D", "S");
+    input = input.toUpperCase().replace(foundTZ, updatedTZ);
     return extractTimezone(input);
   }
   return foundTZ;
