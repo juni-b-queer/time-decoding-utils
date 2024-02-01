@@ -58,6 +58,12 @@ describe("extractTimeFromInput Test Suite", () => {
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
 
+  it('should return date for "12/24/2025 at 12" input', () => {
+    const input = "12/24/2025 at 12";
+    const expected = "2025-12-24T18:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
   it('should return date for "07/24/2025 at 2PM" input', () => {
     const input = "07/24/2025 at 2PM";
     const expected = "2025-07-24T19:00:00.000Z";
