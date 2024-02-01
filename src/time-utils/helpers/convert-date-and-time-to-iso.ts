@@ -6,6 +6,7 @@ import {
   extractTime,
 } from "../extract-date-time-string";
 import { getNextDateTime } from "./current-date-string";
+import {extractTimezone} from "./extract-timezone";
 
 export function convertDateAndTimeToIso(
   input: string,
@@ -49,7 +50,9 @@ export function convertDateAndTimeToIso(
     if (timeString.endsWith("Z")) {
       timezone = "Etc/UTC";
     }
+
     datetime = moment_timezone.tz(input, format, timezone);
+
     if (datetime.isValid()) {
       // if initialized datetime is in the past
       if (datetime.isBefore(nowDateTime)) {

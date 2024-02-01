@@ -1,7 +1,7 @@
 import { extractDateTimeString, extractTime } from "./extract-date-time-string";
 import { convertDateAndTimeToIso } from "./helpers/convert-date-and-time-to-iso";
 import { convertAdditiveTimeToDate } from "./convert-additive-time-to-date";
-import { extractTimezone } from "./helpers/extract-timezone";
+import {extractTimezone, extractTimezoneAbbreviation} from "./helpers/extract-timezone";
 import moment from "moment";
 
 const DEFAULT_TIMEZONE = process.env.DEFAULT_TIMEZONE ?? "America/Chicago";
