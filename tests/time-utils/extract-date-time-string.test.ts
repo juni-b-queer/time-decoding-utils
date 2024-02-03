@@ -409,6 +409,18 @@ describe("Testing extractTime function from time-decoding-utils module", () => {
     expect(output).toBe("12:00PM");
   });
 
+  it("should return 12:00AM for 24PM", () => {
+    const input = "24PM";
+    const output = extractTime(input);
+    expect(output).toBe("12:00AM");
+  });
+
+  it("should return 12:00AM for 0PM", () => {
+    const input = "0PM";
+    const output = extractTime(input);
+    expect(output).toBe("12:00AM");
+  });
+
   it("should return 12:00AM for 48PM", () => {
     const input = "48PM";
     const output = extractTime(input);
