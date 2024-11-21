@@ -38,14 +38,14 @@ export function processTimeUnits(
   return [add(date, options), false];
 }
 
-export function convertAdditiveTimeToDate(timeString: string): string {
+export function convertAdditiveTimeToDate(timeString: string, fromTime: Date | undefined = undefined): string {
   let invalidInput = false;
   const timeParts = extractTimePartsAndUnits(timeString);
   if (!timeParts) {
     return "";
   }
 
-  const currentTime: Date = new Date();
+  const currentTime: Date = fromTime || new Date();
   let date = new Date(currentTime.getTime());
   //@ts-expect-error time part is okay as is
   timeParts.forEach((timePart) => {

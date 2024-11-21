@@ -16,6 +16,18 @@ describe("extractTimeFromInput Test Suite", () => {
     expect(extractTimeFromInput(input)).toEqual(expected);
   });
 
+  it('should return date for "2 hour" input', () => {
+    const input = "2 hours";
+    const expected = "2024-01-16T20:00:00.000Z";
+    expect(extractTimeFromInput(input)).toEqual(expected);
+  });
+
+  it('should return date for "2 hours" input from given time an hour ago', () => {
+    const input = "2 hours";
+    const expected = "2024-01-16T19:00:00.000Z";
+    expect(extractTimeFromInput(input, undefined, new Date("2024-01-16T11:00:00"))).toEqual(expected);
+  });
+
   it('should return date for "a month and a half" input', () => {
     const input = "a month and a half";
     const expected = "2024-03-01T18:00:00.000Z";

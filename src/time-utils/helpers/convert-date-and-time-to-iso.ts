@@ -10,6 +10,7 @@ import { getNextDateTime } from "./current-date-string";
 export function convertDateAndTimeToIso(
   input: string,
   timezone: string = "America/Chicago",
+  fromTime: Date | undefined = undefined,
 ): string {
   // if input is already in iso format, convert the input to a datetime then return the full iso string
   if (moment(input, "YYYY-MM-DDTHH:mm:ss", true).isValid()) {
@@ -19,7 +20,7 @@ export function convertDateAndTimeToIso(
 
   input = input.toUpperCase(); // Convert input to uppercase
 
-  const nowDateTime = moment();
+  const nowDateTime = fromTime || moment();
 
   let timeString: string | boolean = extractTime(input);
   if (typeof timeString === "boolean") {

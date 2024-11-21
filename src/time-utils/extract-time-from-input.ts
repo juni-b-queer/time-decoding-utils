@@ -8,7 +8,8 @@ const DEFAULT_TIMEZONE = process.env.DEFAULT_TIMEZONE ?? "America/Chicago";
 
 export function extractTimeFromInput(
   input: string,
-  timezone: string = DEFAULT_TIMEZONE,
+  timezone: string|undefined = DEFAULT_TIMEZONE,
+  fromTime: Date | undefined = undefined
 ): string {
   const extractedTimezone = extractTimezone(input);
   if (typeof extractedTimezone !== "boolean") {
@@ -16,7 +17,7 @@ export function extractTimeFromInput(
   }
 
   let extractedTimestamp = "";
-  extractedTimestamp = convertAdditiveTimeToDate(input);
+  extractedTimestamp = convertAdditiveTimeToDate(input, fromTime);
   if (extractedTimestamp !== "") {
     const match = extractTime(input.toUpperCase());
     if (typeof match !== "boolean") {
@@ -38,6 +39,7 @@ export function extractTimeFromInput(
       extractedTimestamp = convertDateAndTimeToIso(
         extractDateTimeString(input),
         timezone,
+          fromTime
       );
     } catch (error) {
       extractedTimestamp = "";
